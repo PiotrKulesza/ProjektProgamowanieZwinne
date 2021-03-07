@@ -12,40 +12,40 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "student")
 public class Student {
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name="student_id")
 	private Integer studentId;
-	
+
 	@Column(nullable = false, length = 50)
 	private String imie;
-	
+
 	@Column(nullable = false, length = 100)
 	private String nazwisko;
-	
+
 	@Column(unique=true, nullable = false, length = 50, name = "nr_indeksu")
 	private String nrIndeksu;
-	
+
 	@Column(nullable = false, length = 50)
 	private String email;
-	
+
 	@Column(nullable = false)
 	private boolean stacjonarny;
-	
+
 	@ManyToMany(mappedBy = "studenci")
 	private Set<Projekt> projekty;
-	
+
 	public Student() {
 	}
-	
+
 	public Student(String imie, String nazwisko, String nrIndeksu, Boolean stacjonarny) {
 		this.imie = imie;
 		this.nazwisko = nazwisko;
 		this.nrIndeksu = nrIndeksu;
 		this.stacjonarny = stacjonarny;
 	}
-	
+
 	public Student(String imie, String nazwisko, String nrIndeksu, String email,
 			Boolean stacjonarny) {
 		this.imie = imie;
@@ -54,8 +54,8 @@ public class Student {
 		this.email = email;
 		this.stacjonarny = stacjonarny;
 	}
-	
-	
+
+
 	public Integer getStudentId() {
 		return studentId;
 	}
@@ -98,7 +98,4 @@ public class Student {
 	public void setProjekty(Set<Projekt> projekty) {
 		this.projekty = projekty;
 	}
-	
-	
-	
 }

@@ -13,28 +13,28 @@ import javax.persistence.Table;
 @Entity
 @Table(name="zadanie")
 public class Zadanie {
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name="zadanie_id")
 	private Integer zadanieId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "projekt_id")
 	private Projekt projekt;
-	
+
 	@Column(nullable = false, length = 50)
 	private String nazwa;
-	
+
 	@Column(length = 1000)
 	private String opis;
-	
+
 	@Column(nullable = false, name = "dataczas_dodania")
 	private LocalDateTime dataczasDodania;
-	
+
 	@Column(name = "kolejnosc")
 	private Integer kolejnosc;
-	
+
 
 	public Zadanie() {
 		super();
@@ -97,8 +97,4 @@ public class Zadanie {
 	public void setKolejnosc(Integer kolejnosc) {
 		this.kolejnosc = kolejnosc;
 	}
-	
-	
-
-	
 }

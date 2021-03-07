@@ -37,7 +37,7 @@ table, th, td {
 		int pageNumber = 0;
 		if(request.getParameter("page")!=null)
 			pageNumber=Integer.parseInt(request.getParameter("page"));
-		
+
 	%>
 	<%if(pageNumber>0){%>><a href="/project-web-app-group-2-1/projekt_lista.jsp?page=<%=pageNumber-1%>">Poprzednia strona</a>
 	<%} %>
@@ -51,14 +51,14 @@ table, th, td {
 			<th>Data utworzenia</th>
 			<th>Data oddania</th>
 		</tr>
-	
-	<% 
+
+	<%
 		ArrayList<Projekt> projekty = new ArrayList<Projekt>();
 		projekty=(ArrayList<Projekt>) request.getAttribute("projekty");
 		if(projekty!=null){
-		for(int i=0+(5*pageNumber);i<5*(pageNumber+1);i++) {	
-	%>	
-		
+		for(int i=0+(5*pageNumber);i<5*(pageNumber+1);i++) {
+	%>
+
 		<tr>
 			<th><%=i+1%></th>
 			<td><%=projekty.get(i).getProjektId()%></td>
@@ -67,11 +67,11 @@ table, th, td {
 			<td><%=projekty.get(i).getDataczasUtworzenia()%></td>
 			<td><%=projekty.get(i).getDataOddania()%></td>
 		</tr>
-		
+
 	<%}}else{ %>
 	<tr>
 			<th scope=6>Dane są puste</th>
-			
+
 	</tr>
 	<%} %>
 	</table>

@@ -23,7 +23,7 @@ import com.project.util.HibernateUtil;
 public class ProjektPobierz extends HttpServlet{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -34,25 +34,25 @@ public class ProjektPobierz extends HttpServlet{
         super();
         // TODO Auto-generated constructor stub
     }
-    
+
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-    	
+
     	EntityManager entityManager = HibernateUtil.getInstance().createEntityManager();
     	TypedQuery<Projekt> query = entityManager
     			.createQuery("SELECT p FROM Projekt p", Projekt.class);
     	List<Projekt> projekty = new ArrayList<>();
     	projekty = query.getResultList();
     	request.setAttribute("projekty", projekty);
-    	
+
     	ServletContext context = getServletContext();
-		RequestDispatcher dispatcher = context.getRequestDispatcher("/projekt_lista.jsp"); 
+		RequestDispatcher dispatcher = context.getRequestDispatcher("/projekt_lista.jsp");
 		dispatcher.forward(request, response);
 	}
-    
+
     /**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -61,5 +61,5 @@ public class ProjektPobierz extends HttpServlet{
 		doGet(request, response);
 		//processRequest(request, response);
 	}
-    
+
 }

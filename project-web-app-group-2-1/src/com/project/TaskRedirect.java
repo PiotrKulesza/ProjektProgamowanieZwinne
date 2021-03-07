@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TaskRedirect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENT_TYPE = "text/html;charset=UTF-8";
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,12 +43,12 @@ public class TaskRedirect extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		processRequest(request, response);
-		
+
 	}
-	
+
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-			
+
 			response.setContentType(CONTENT_TYPE);
 			PrintWriter out = response.getWriter();
 			try{
@@ -59,7 +59,7 @@ public class TaskRedirect extends HttpServlet {
 			}finally{
 				out.close();
 			}
-			
+
 		}
 
 }

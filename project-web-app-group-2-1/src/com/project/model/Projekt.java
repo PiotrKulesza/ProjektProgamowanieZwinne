@@ -20,27 +20,27 @@ import javax.persistence.JoinColumn;
 @Entity
 @Table(name = "projekt")
 public class Projekt {
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "projekt_id")
 	private Integer projektId;
-	
+
 	@Column(nullable = false, length = 50)
 	private String nazwa;
-	
+
 	@Column(nullable = false, length = 1000)
 	private String opis;
-	
+
 	@Column(nullable = false, name = "dataczas_utworzenia")
 	private LocalDateTime dataczasUtworzenia;
-	
+
 	@Column(nullable = false, name = "data_oddania")
 	private LocalDate dataOddania;
-	
+
 	@OneToMany(mappedBy = "projekt")
 	private List<Zadanie> zadania;
-	
+
 	@ManyToMany
 	@JoinTable(name = "projekt_student",
 	joinColumns = {@JoinColumn(name="projekt_id")},
@@ -113,8 +113,4 @@ public class Projekt {
 		return "Projekt [nazwa=" + nazwa + ", opis=" + opis + ", dataczasUtworzenia=" + dataczasUtworzenia
 				+ ", dataOddania=" + dataOddania + "]";
 	}
-	
-	
-	
-	
 }

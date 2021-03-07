@@ -20,7 +20,7 @@ import com.project.util.HibernateUtil;
 public class ProjektDodaj extends HttpServlet{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public class ProjektDodaj extends HttpServlet{
         super();
         // TODO Auto-generated constructor stub
     }
-    
+
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -39,7 +39,7 @@ public class ProjektDodaj extends HttpServlet{
 		// TODO Auto-generated method stub
     	doPost(request, response);
 	}
-    
+
     /**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -54,7 +54,7 @@ public class ProjektDodaj extends HttpServlet{
 			projekt.setOpis(request.getParameter("opis"));
 			projekt.setDataczasUtworzenia(LocalDateTime.now());
 			projekt.setDataOddania(LocalDate.parse(request.getParameter("dataOddania")));
-			
+
 			entityManager.getTransaction().begin();
 			entityManager.persist(projekt);
 			entityManager.getTransaction().commit();
@@ -65,5 +65,5 @@ public class ProjektDodaj extends HttpServlet{
 		RequestDispatcher dispatcher = context.getRequestDispatcher("/projekt_dodaj.jsp"); 
 		dispatcher.forward(request, response);
 	}
-    
+
 }

@@ -9,8 +9,8 @@
 </head>
 <body>
 	<h1>Proszę podać dane projektu</h1>
-	
-	<form action="ProjektDodaj" method="POST"> 
+
+	<form action="ProjektDodaj" method="POST">
 		<table>
 			<tr>
 			<th>Nazwa:</th> <th><input type="text" name="nazwa" /> </th>
@@ -22,12 +22,12 @@
 			<th>Data oddania:</th>  <th><input type="date" id="start" name="dataOddania" value="2022-07-22"/> </th>
 			</tr>
 		</table>
-		<input name="btn_zapisz" value="Zapisz" type="submit"> 
+		<input name="btn_zapisz" value="Zapisz" type="submit">
 	</form>
-	
+
 	ID dodanego projektu: ${projekt.projektId} <br/>
 	Nazwa dodanego projektu: ${projekt.nazwa} <br/>
 	Opis dodanego projektu: ${projekt.opis} <br/>
-	
+
 </body>
 </html>

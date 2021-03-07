@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TaskServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENT_TYPE = "text/html;charset=UTF-8";
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -41,12 +41,12 @@ public class TaskServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		processRequest(request, response);
-		
+
 	}
-	
+
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		
+
 		response.setContentType(CONTENT_TYPE);
 		PrintWriter out = response.getWriter();
 		try{
@@ -55,11 +55,11 @@ public class TaskServlet extends HttpServlet {
 			out.println("<h2>Hello World!</h2>");
 			outFooter(out);
 		}finally{
-			
+
 		}
-		
+
 	}
-	
+
 	public static void outHeader(PrintWriter out, String title){
 		String str = "<html><head>" +
 		"<meta http-equiv=\"Content-Type\" content=\"" + CONTENT_TYPE + "\">" +
