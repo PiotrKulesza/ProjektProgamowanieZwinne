@@ -1,9 +1,7 @@
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.project.model.Projekt"%>
-<%@page import="com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,10 +19,8 @@ table, th, td {
 	<h1>Lista projektów</h1>
 	<a href="/project-web-app-group-2-1/projekt_dodaj.jsp">Dodaj projekt</a>
 	<form action="ProjektPobierz" method="GET">
-		<input type="text" name="szukajNazwaLubOpis" /> <input name="btn_szukaj" value="Szukaj" type="submit"> 
-	</form>
-	<form>
-		Rozmiar strony: <select id="ilosc" name="ilosc">
+		<p><input type="text" name="szukajNazwaLubOpis" /> <input name="btn_szukaj" value="Szukaj" type="submit"> 
+		<p>Rozmiar strony: <select id="ilosc" name="ilosc">
 		    <option value="5">5</option>
 		    <option value="6">6</option>
 		    <option value="7">7</option>
@@ -33,47 +29,74 @@ table, th, td {
 		    <option value="10">10</option>
   		</select>
 	</form>
-	<%
-		int pageNumber = 0;
-		if(request.getParameter("page")!=null)
-			pageNumber=Integer.parseInt(request.getParameter("page"));
-
-	%>
-	<%if(pageNumber>0){%>><a href="/project-web-app-group-2-1/projekt_lista.jsp?page=<%=pageNumber-1%>">Poprzednia strona</a>
-	<%} %>
-	<a href="/project-web-app-group-2-1/projekt_lista.jsp?page=<%=pageNumber+1%>">Następna strona</a>
+	
+	<c:if test="${previousPage>=0 }">
+		<c:url value="ProjektPobierz" var="previousPageAhref">
+				<c:param name="szukajNazwaLubOpis" value="${szukajNazwaLubOpis}" />
+				<c:param name="btn_szukaj" value="${btn_szukaj}" />
+				<c:param name="page" value="${previousPage}" />
+				<c:param name="ilosc" value="${amountOfItems}" />
+				
+		</c:url>
+		<a href="${previousPageAhref}">Poprzednia strona</a>
+	</c:if>
+	<c:if test="${nextPage>0 }">
+		<c:url value="ProjektPobierz" var="nextPageAhref">
+				<c:param name="szukajNazwaLubOpis" value="${szukajNazwaLubOpis}" />
+				<c:param name="btn_szukaj" value="${btn_szukaj}" />
+				<c:param name="page" value="${nextPage}" />
+				<c:param name="ilosc" value="${amountOfItems}" />
+				
+		</c:url>
+		<a href="${nextPageAhref}">Następna strona</a>
+	</c:if>
+	
+	
 	<table>
 		<tr>
-			<th>LP.</th>
-			<th>ID</th>
+			<th>Lp.</th>
+			<th>Id</th>
 			<th>Nazwa</th>
 			<th>Opis</th>
-			<th>Data utworzenia</th>
-			<th>Data oddania</th>
+			<th>Utworzony</th>
+			<th>Data obrony</th>
+			<th>Edycja</th>
 		</tr>
 
-	<%
-		ArrayList<Projekt> projekty = new ArrayList<Projekt>();
-		projekty=(ArrayList<Projekt>) request.getAttribute("projekty");
-		if(projekty!=null){
-		for(int i=0+(5*pageNumber);i<5*(pageNumber+1);i++) {
-	%>
-
-		<tr>
-			<th><%=i+1%></th>
-			<td><%=projekty.get(i).getProjektId()%></td>
-			<td><%=projekty.get(i).getNazwa()%></td>
-			<td><%=projekty.get(i).getOpis()%></td>
-			<td><%=projekty.get(i).getDataczasUtworzenia()%></td>
-			<td><%=projekty.get(i).getDataOddania()%></td>
-		</tr>
-
-	<%}}else{ %>
-	<tr>
-			<th scope=6>Dane są puste</th>
-
-	</tr>
-	<%} %>
+		<c:forEach var="projekt" items="${requestScope.projekty}" varStatus="info">
+			<tr>
+				<td>${info.count}.</td>
+				<td><c:out value="${projekt.projektId}" /></td>
+				<td><c:out value="${projekt.nazwa}" /></td>
+				<td><c:out value="${projekt.opis}" /></td>
+				<javatime:format value="${projekt.dataczasUtworzenia}" var="fmtDataczasUtworzenia" pattern="yyyy-MM-dd hh:mm:ss" />
+				<td><c:out value="${fmtDataczasUtworzenia}" /></td>
+				<javatime:format value="${projekt.dataOddania}" var="fmtDataOddania" pattern="yyyy-MM-dd" />
+				<td><c:out value="${fmtDataOddania}" /></td>
+				<c:url value="/pages/zadania.jsp" var="linkZadaniaProjektu">
+					<c:param name="x_projekt_id" value="${projekt.projektId}" />
+				</c:url>
+				<c:url value="ProjektUsun" var="usunProjekt">
+					<c:param name="szukajNazwaLubOpis" value="${szukajNazwaLubOpis}" />
+					<c:param name="btn_szukaj" value="${btn_szukaj}" />
+					<c:param name="page" value="${page}" />
+					<c:param name="ilosc" value="${amountOfItems}" />
+					<c:param name="projektId" value="${projekt.projektId}" />
+				</c:url>
+				<c:url value="ProjektStareDane" var="stareDaneProjekt">
+					<c:param name="szukajNazwaLubOpis" value="${szukajNazwaLubOpis}" />
+					<c:param name="btn_szukaj" value="${btn_szukaj}" />
+					<c:param name="page" value="${page}" />
+					<c:param name="ilosc" value="${amountOfItems}" />
+					<c:param name="projektId" value="${projekt.projektId}" />
+				</c:url>
+				<td>
+					<p><a href='<c:out value="${linkZadaniaProjektu}" />'>Zadania</a>
+					<p><a href='<c:out value="${usunProjekt}" />'>Usun</a>
+					<p><a href='<c:out value="${stareDaneProjekt}" />'>Edytuj</a>
+				</td>
+			</tr>
+		</c:forEach>
 	</table>
 </body>
 </html>
