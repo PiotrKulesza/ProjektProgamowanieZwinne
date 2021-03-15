@@ -19,7 +19,7 @@
 	</c:url>
 	<a href="${returnToList}">Powrót</a>
 
-	<form action="ProjektEdytuj" method="POST" id="">
+	<form action="ProjektEdytuj" method="POST" id="projektform">
 		<table>
 			<tr>
 			<th>Id:</th> <th><input type="text" name="projektId" value="${projekt.projektId }" readonly/> </th>
@@ -37,9 +37,7 @@
 		<input name="btn_zapisz" value="Zapisz" type="submit">
 	</form>
 
-	ID zmienionego projektu: ${projekt.projektId} <br/>
-	Nazwa zmienionego projektu: ${projekt.nazwa} <br/>
-	Opis zmienionego projektu: ${projekt.opis} <br/>
+	
 
 </body>
 </html>
