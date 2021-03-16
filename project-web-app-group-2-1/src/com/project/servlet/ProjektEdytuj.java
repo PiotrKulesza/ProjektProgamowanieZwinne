@@ -54,7 +54,7 @@ public class ProjektEdytuj extends HttpServlet{
 		projekt.setOpis(request.getParameter("opis"));
 		projekt.setDataOddania(LocalDate.parse(request.getParameter("dataOddania")));
 		entityManager.getTransaction().begin();
-		int zmianaTF = entityManager.createQuery("UPDATE Projekt p SET p.nazwa ='"
+		entityManager.createQuery("UPDATE Projekt p SET p.nazwa ='"
 				+projekt.getNazwa()
 				+"', p.opis='"
 				+projekt.getOpis()
@@ -62,7 +62,6 @@ public class ProjektEdytuj extends HttpServlet{
 				+projekt.getDataOddania()
 				+"' WHERE p.projektId='"+projekt.getProjektId()+"'")
 				.executeUpdate();
-		System.out.println(zmianaTF);
 		entityManager.getTransaction().commit();
 		entityManager.close();
 		ServletContext context = getServletContext();
