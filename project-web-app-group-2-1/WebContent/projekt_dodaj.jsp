@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@include file="header.jsp"%>
 	<h1>Proszę podać dane projektu</h1>
 
 	<form action="ProjektDodaj" method="POST" id="projektform">

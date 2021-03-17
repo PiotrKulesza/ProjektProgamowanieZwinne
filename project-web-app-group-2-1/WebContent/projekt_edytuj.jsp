@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@include file="header.jsp"%>
 	<h1>Proszę podać nowe dane projektu</h1>
 	
 	<c:url value="ProjektPobierz" var="returnToList">

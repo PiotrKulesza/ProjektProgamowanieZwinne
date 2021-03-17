@@ -16,8 +16,8 @@ table, th, td {
 </head>
 
 <body>
+<%@include file="header.jsp"%>
 	<h1>Lista projektów</h1>
-	<a href="/project-web-app-group-2-1/projekt_dodaj.jsp">Dodaj projekt</a>
 	<form action="ProjektPobierz" method="GET">
 		<p><input type="text" name="szukajNazwaLubOpis" /> <input name="btn_szukaj" value="Szukaj" type="submit"> 
 		<p>Rozmiar strony: <select id="ilosc" name="ilosc">
