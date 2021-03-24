@@ -1,10 +1,7 @@
 package com.project.servlet;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -17,12 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.project.model.Projekt;
-import com.project.model.Student;
 import com.project.model.Zadanie;
 import com.project.util.HibernateUtil;
 
-@WebServlet("/ZadaniaDodaj")
-public class ZadaniaDodaj extends HttpServlet {
+@WebServlet("/ZadanieEdytuj")
+public class ZadanieEdytuj extends HttpServlet {
 
 	
 	/**
@@ -33,7 +29,7 @@ public class ZadaniaDodaj extends HttpServlet {
 	/**
     * @see HttpServlet#HttpServlet()
     */
-   public ZadaniaDodaj() {
+   public ZadanieEdytuj() {
        super();
        // TODO Auto-generated constructor stub
    }
@@ -55,10 +51,7 @@ public class ZadaniaDodaj extends HttpServlet {
 		
 		EntityManager entityManager = HibernateUtil.getInstance().createEntityManager();
 			
-		Zadanie zadanie = new Zadanie();
-		zadanie.setDataczasDodania(LocalDateTime.now());
-		zadanie.setNazwa(request.getParameter("nazwa"));
-		zadanie.setOpis(request.getParameter("opis"));
+
 			
 		int page = 0;
    		if(request.getParameter("page")!=null)
@@ -66,29 +59,22 @@ public class ZadaniaDodaj extends HttpServlet {
    		int amountOfItems = Integer.parseInt(request.getParameter("ilosc"));
    		String szukajNazwaLubOpis = request.getParameter("szukajNazwaLubOpis");
    		int projektId = Integer.parseInt(request.getParameter("projektId"));
+   		int zadanieId = Integer.parseInt(request.getParameter("zadanieId"));
    		
    		
-
-   		TypedQuery<Projekt> query = entityManager
-				.createQuery("SELECT p FROM Projekt p WHERE p.projektId = "+projektId, Projekt.class);
-		Projekt projekt = query.getSingleResult();
-		if(projekt.getZadania()!=null && !projekt.getZadania().isEmpty()) 
-			zadanie.setKolejnosc(projekt.getZadania().size()+1);
-		else zadanie.setKolejnosc(1);
+   		Zadanie zadanie = entityManager.find(Zadanie.class, zadanieId);
+   		entityManager.getTransaction().begin();
+   		zadanie.setNazwa(request.getParameter("nazwa"));
+   		zadanie.setOpis(request.getParameter("opis"));
+   		entityManager.getTransaction().commit();
+   		entityManager.clear();
    		
-		zadanie.setProjekt(projekt);
-		
-		entityManager.getTransaction().begin();
-		entityManager.persist(zadanie);
-		entityManager.getTransaction().commit();
-		
-		entityManager.close(); // zalecane umieszczenie metody close() w bloku finally
 		
 		request.setAttribute("page", page);
     	request.setAttribute("amountOfItems", amountOfItems);
     	request.setAttribute("ilosc", amountOfItems);
     	request.setAttribute("szukajNazwaLubOpis", szukajNazwaLubOpis);
-    	request.setAttribute("projekt", projekt);
+    	request.setAttribute("projektId", projektId);
     	
     	ServletContext context = getServletContext();
 		RequestDispatcher dispatcher = context.getRequestDispatcher("/ZadaniaPobierz");
@@ -97,7 +83,3 @@ public class ZadaniaDodaj extends HttpServlet {
    
    
 }
-
-
-
-

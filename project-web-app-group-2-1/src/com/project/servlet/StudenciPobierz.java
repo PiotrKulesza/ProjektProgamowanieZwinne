@@ -16,10 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.project.model.Projekt;
+import com.project.model.Student;
 import com.project.util.HibernateUtil;
 
-@WebServlet("/ZadaniaPobierz")
-public class ZadaniaPobierz extends HttpServlet{
+@WebServlet("/StudenciPobierz")
+public class StudenciPobierz extends HttpServlet{
 	
 	/**
 	 *
@@ -29,7 +30,7 @@ public class ZadaniaPobierz extends HttpServlet{
 	/**
     * @see HttpServlet#HttpServlet()
     */
-   public ZadaniaPobierz() {
+   public StudenciPobierz() {
        super();
        // TODO Auto-generated constructor stub
    }
@@ -52,16 +53,24 @@ public class ZadaniaPobierz extends HttpServlet{
 				.createQuery("SELECT p FROM Projekt p WHERE p.projektId = "+projektId, Projekt.class);
 		Projekt projekt = query.getSingleResult();
 		projekt.setZadania(projekt.getZadania().stream().sorted((o1,o2) -> o1.getKolejnosc().compareTo(o2.getKolejnosc())).collect(Collectors.toList()));
+		List<Student> students = entityManager.createQuery("Select s from Student s").getResultList();
+		List<Student> listaDodanychStudentow = new ArrayList<>(projekt.getStudenci());
 		
+		for (Student student:listaDodanychStudentow ) {
+			students.remove(student);
+		}
+		System.out.println(students.size());
 		if (projekt!= null) {
 			request.setAttribute("page", page);
 	    	request.setAttribute("amountOfItems", amountOfItems);
 	    	request.setAttribute("ilosc", amountOfItems);
 	    	request.setAttribute("szukajNazwaLubOpis", szukajNazwaLubOpis);
-	    	request.setAttribute("projekt", projekt);
+	    	request.setAttribute("projektId",projektId);
+	    	request.setAttribute("students", students);
+	    	request.setAttribute("listaDodanychStudentow", listaDodanychStudentow);
 	    	
 	    	ServletContext context = getServletContext();
-			RequestDispatcher dispatcher = context.getRequestDispatcher("/zadania_lista.jsp");
+			RequestDispatcher dispatcher = context.getRequestDispatcher("/student_dodaj_projekt.jsp");
 			dispatcher.forward(request, response);
 		}else {
 			request.setAttribute("page", page);

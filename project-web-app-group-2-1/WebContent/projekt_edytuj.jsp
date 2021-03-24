@@ -23,7 +23,7 @@
 	<form action="ProjektEdytuj" method="POST" id="projektform">
 		<table>
 			<tr>
-			<th>Id:</th> <th><input type="text" name="projektId" value="${projekt.projektId }" readonly/> </th>
+			<th>Id:</th> <th><input type="hidden" name="projektId" value="${projekt.projektId }" readonly/> </th>
 			</tr>
 			<tr>
 			<th>Nazwa:</th> <th><input type="text" name="nazwa" value="${projekt.nazwa }"/> </th>

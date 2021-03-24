@@ -107,6 +107,16 @@ public class Projekt {
 	public void setZadania(List<Zadanie> zadania) {
 		this.zadania = zadania;
 	}
+	
+	
+
+	public Set<Student> getStudenci() {
+		return studenci;
+	}
+
+	public void setStudenci(Set<Student> studenci) {
+		this.studenci = studenci;
+	}
 
 	@Override
 	public String toString() {

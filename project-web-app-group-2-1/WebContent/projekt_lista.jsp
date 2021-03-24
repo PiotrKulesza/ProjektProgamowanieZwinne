@@ -73,8 +73,19 @@ table, th, td {
 				<td><c:out value="${fmtDataczasUtworzenia}" /></td>
 				<javatime:format value="${projekt.dataOddania}" var="fmtDataOddania" pattern="yyyy-MM-dd" />
 				<td><c:out value="${fmtDataOddania}" /></td>
-				<c:url value="/pages/zadania.jsp" var="linkZadaniaProjektu">
-					<c:param name="x_projekt_id" value="${projekt.projektId}" />
+				<c:url value="StudenciPobierz" var="linkStudenciProjektu">
+					<c:param name="szukajNazwaLubOpis" value="${szukajNazwaLubOpis}" />
+					<c:param name="btn_szukaj" value="${btn_szukaj}" />
+					<c:param name="page" value="${page}" />
+					<c:param name="ilosc" value="${amountOfItems}" />
+					<c:param name="projektId" value="${projekt.projektId}" />
+				</c:url>
+				<c:url value="ZadaniaPobierz" var="linkZadaniaProjektu">
+					<c:param name="szukajNazwaLubOpis" value="${szukajNazwaLubOpis}" />
+					<c:param name="btn_szukaj" value="${btn_szukaj}" />
+					<c:param name="page" value="${page}" />
+					<c:param name="ilosc" value="${amountOfItems}" />
+					<c:param name="projektId" value="${projekt.projektId}" />
 				</c:url>
 				<c:url value="ProjektUsun" var="usunProjekt">
 					<c:param name="szukajNazwaLubOpis" value="${szukajNazwaLubOpis}" />
@@ -91,9 +102,11 @@ table, th, td {
 					<c:param name="projektId" value="${projekt.projektId}" />
 				</c:url>
 				<td>
+					<p><a href='<c:out value="${linkStudenciProjektu}" />'>Studenci</a>
 					<p><a href='<c:out value="${linkZadaniaProjektu}" />'>Zadania</a>
 					<p><a href='<c:out value="${usunProjekt}" />'>Usun</a>
 					<p><a href='<c:out value="${stareDaneProjekt}" />'>Edytuj</a>
+					
 				</td>
 			</tr>
 		</c:forEach>
