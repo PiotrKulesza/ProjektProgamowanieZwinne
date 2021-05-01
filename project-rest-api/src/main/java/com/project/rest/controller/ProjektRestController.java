@@ -1,5 +1,6 @@
 package com.project.rest.controller;
 
+import javax.validation.Valid;
 import com.project.rest.model.Projekt;
 import com.project.rest.services.ProjektService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,7 +30,7 @@ public class ProjektRestController {
     }
 
     @PostMapping(path = "/projekty")
-    ResponseEntity<Void> createProjekt(@Validated @RequestBody Projekt projekt) {
+    ResponseEntity<Void> createProjekt(@Valid @RequestBody Projekt projekt) {
         Projekt createdProjekt = projektService.setProjekt(projekt);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{projektId}").buildAndExpand(createdProjekt.getProjektId()).toUri();
