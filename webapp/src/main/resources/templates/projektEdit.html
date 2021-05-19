@@ -6,6 +6,7 @@
 </head>
 <body>
 <div class="root" th:with="isDelete=${#strings.equalsIgnoreCase(param.delete,'true')}">
+    <!--/*@thymesVar id="projekt" type="com.project.webapp.model.Projekt"*/-->
     <form action="#" th:action="@{/projektEdit}" th:object="${projekt}" method="POST"
           th:with="akcja=*{projektId} ? (${isDelete}?'delete':'update') :'create', opis=*{projektId} ?
 (${isDelete}?'Usuń':'Aktualizuj') : 'Utwórz'" autocomplete="off">
@@ -38,13 +39,9 @@
                 <label for="dataOddania" class="lbl">Data oddania:</label>
                 <input th:field="*{dataOddania}" class="fld" type="text" size="10" /><i>(RRRR-MM-DD)</i>
             </div>
-            <div th:if="*{dataCzasUtworzenia}">
+            <div th:if="*{dataczasUtworzenia}">
                 <label for="dataCzasUtworzenia" class="lbl">Utworzony:</label>
-                <input th:field="*{dataCzasUtworzenia}" class="fld" type="text" size="23" readonly />
-            </div>
-            <div th:if="*{dataCzasModyfikacji}">
-                <label for="dataCzasModyfikacji" class="lbl">Zmodyfikowany:</label>
-                <input th:field="*{dataCzasModyfikacji}" class="fld" type="text" size="23" readonly />
+                <input th:field="*{dataczasUtworzenia}" class="fld" type="text" size="23" readonly />
             </div>
         </div>
     </form>

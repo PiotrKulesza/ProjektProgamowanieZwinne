@@ -19,7 +19,7 @@ public class ProjektServiceImpl implements ProjektService {
     private static final Logger logger = LoggerFactory.getLogger(ProjektServiceImpl.class);
     @Value("${rest.server.url}") // adres serwera jest wstrzykiwany przez Springa, a jego wartość
     private String serverUrl; // przechowywana w pliku src/main/resources/application.properties
-    private final static String RESOURCE_PATH = "/api/studenci";
+    private final static String RESOURCE_PATH = "/api/projekt";
     // obiekt wstrzykiwany poprzez konstruktor, dzięki adnotacjom
     private RestTemplate restTemplate; // @Configuration i @Bean zawartym w klasie SecurityConfig
     // Spring utworzy wcześniej obiekt, a adnotacja @Autowired
