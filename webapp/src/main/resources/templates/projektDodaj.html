@@ -4,8 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:replace="header :: myHeader"></div>
 </head>
 <body>
 <form method="get" action="#" th:action="@{/projektList}" id="anulujForm">

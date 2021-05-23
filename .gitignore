@@ -1,4 +1,5 @@
 .idea
+.metadata
 /target/
 /project-web-app-group-2-1/.idea
 /project-rest-api/.idea
