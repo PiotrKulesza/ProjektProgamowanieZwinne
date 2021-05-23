@@ -19,7 +19,7 @@ public class ProjektServiceImpl implements ProjektService {
     private static final Logger logger = LoggerFactory.getLogger(ProjektServiceImpl.class);
     @Value("${rest.server.url}") // adres serwera jest wstrzykiwany przez Springa, a jego wartość
     private String serverUrl; // przechowywana w pliku src/main/resources/application.properties
-    private final static String RESOURCE_PATH = "/api/projekt";
+    private final static String RESOURCE_PATH = "/api/projekty";
     // obiekt wstrzykiwany poprzez konstruktor, dzięki adnotacjom
     private RestTemplate restTemplate; // @Configuration i @Bean zawartym w klasie SecurityConfig
     // Spring utworzy wcześniej obiekt, a adnotacja @Autowired
@@ -72,7 +72,7 @@ public class ProjektServiceImpl implements ProjektService {
     @Override
     public Page<Projekt> searchByNazwa(String nazwa, Pageable pageable) {
         URI url = ServiceUtil.getUriComponent(serverUrl, getResourcePath(), pageable)
-                .queryParam("nazwisko", nazwa)
+                .queryParam("nazwa", nazwa)
                 .build().toUri();
         logger.info("REQUEST -> GET {}", url);
         return getPage(url, restTemplate);

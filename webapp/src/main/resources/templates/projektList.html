@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<form method="get" action="#" th:action="@{/projektDodaj}" id="dodajProjektForm">
+    <input type="submit" value="Dodaj">
+</form>
 
+<form method="get" action="#" th:action="@{/projektList/search}" id="searchform">
+    <label for="fname">Nazwa:</label>
+    <input type="text" id="fname" name="nazwa"><br><br>
+    <label for="size">Liczba elementó na stornie:</label>
+    <select name="size" id="size" form="searchform">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th> LP.</th>
+            <th> Id </th>
+            <th> Nazwa </th>
+            <th> Opis </th>
+            <th> Data oddania </th>
+            <th> Działania </th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${projekty.isEmpty()}">
+        <td colspan="6"> Brak Projektów </td>
+    </tr>
+    <tr th:each="projekt, iterator :  ${projekty}">
+        <td><span th:text="${iterator.index+1}"> LP. </span></td>
+        <td><span th:text="${projekt.getProjektId()}"> Id </span></td>
+        <td><span th:text="${projekt.getNazwa()}"> Nazwa </span></td>
+        <td><span th:text="${projekt.getOpis()}"> Opis </span></td>
+        <td><span th:text="${projekt.getDataOddania()}"> Data oddania </span></td>
+        <td><form method="post" action="#" th:action="@{/projektList/delete}" id="deleteForm">
+            <input name="nazwa" type="hidden" th:value="${nazwa}">
+            <input name="size" type="hidden" th:value="${size}">
+            <input name="page" type="hidden" th:value="${page}">
+            <input name="projektId" type="hidden" th:value="${projekt.getProjektId()}">
+            <input type="submit" value="Next">
+        </form></td>
+    </tr>
+    </tbody>
+</table>
+<form method="get" action="#" th:action="@{/projektList/changePage}" id="previousForm">
+    <input name="nazwa" type="hidden" th:value="${nazwa}">
+    <input name="size" type="hidden" th:value="${size}">
+    <input name="page" type="hidden" th:value="${previousPage}">
+   <input th:if="${page>0}" type="submit" value="Previous">
+</form>
+<form method="get" action="#" th:action="@{/projektList/changePage}" id="nextForm">
+    <input name="nazwa" type="hidden" th:value="${nazwa}">
+    <input name="size" type="hidden" th:value="${size}">
+    <input name="page" type="hidden" th:value="${nextPage}">
+    <input type="submit" value="Next">
+</form>
 </body>
 </html>
