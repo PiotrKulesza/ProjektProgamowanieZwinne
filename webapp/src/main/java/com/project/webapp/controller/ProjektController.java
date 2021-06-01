@@ -110,6 +110,7 @@ public class ProjektController {
     @PostMapping(path = "/projektEdit")
     public String projektEditSave(@ModelAttribute @Valid Projekt projekt, BindingResult bindingResult) {
 //parametr BindingResult powinien wystąpić zaraz za parametrem opatrzonym adnotacją @Valid
+        System.out.println("Terst");
         if (bindingResult.hasErrors()) {
             return "projektEdit";
         }

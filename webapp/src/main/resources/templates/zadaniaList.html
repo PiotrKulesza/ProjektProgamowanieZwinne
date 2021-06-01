@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <div th:replace="header :: myHeader"></div>
+</head>
+<body>
+
+<form method="get" action="#" th:action="@{/zadanieDodaj}" id="dodajZadanieForm">
+    <input type="hidden" name="projektId" th:value="${projektId}">
+    <input type="submit" value="Dodaj">
+
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th> Kolejność</th>
+        <th> Id </th>
+        <th> Nazwa </th>
+        <th> Opis </th>
+        <th> Działania </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${zadania.isEmpty()}">
+        <td colspan="6"> Brak Zadań </td>
+    </tr>
+    <tr th:each="zadanie:  ${zadania}">
+        <td><span th:text="${zadanie.getKolejnosc()}"> Kolejność </span></td>
+        <td><span th:text="${zadanie.getZadanieId()}"> Id </span></td>
+        <td><span th:text="${zadanie.getNazwa()}"> Nazwa </span></td>
+        <td><span th:text="${zadanie.getOpis()}"> Opis </span></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

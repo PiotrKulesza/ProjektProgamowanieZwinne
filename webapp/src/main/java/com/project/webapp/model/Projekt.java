@@ -34,7 +34,7 @@ public class Projekt {
 	private LocalDate dataOddania;
 
 
-	@JsonIgnoreProperties({"projekt"})
+	@JsonIgnoreProperties(value ={"projekt"}, allowSetters = true)
 	private List<Zadanie> zadania;
 
 

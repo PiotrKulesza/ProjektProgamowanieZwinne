@@ -37,6 +37,19 @@ public class ProjektRestController {
         return ResponseEntity.created(location).build();
     }
 
+    @PutMapping(path = "/projekty/{projektId}")
+    ResponseEntity<Void> saveProjekt(@Valid @RequestBody Projekt projekt,
+                                     @PathVariable Integer projektId) {
+
+        System.out.println("Test");
+        return projektService.getProjekt(projektId)
+                .map(p -> {
+                    projektService.setProjekt(projekt);
+                    return new ResponseEntity<Void>(HttpStatus.OK); // 200 (można też zwracać 204 - No content)
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build()); // 404 - Not found
+    }
+
     @DeleteMapping("/projekty/{projektId}")
     public ResponseEntity<Void> deleteProjekt(@PathVariable Integer projektId) {
         return projektService.getProjekt(projektId).map(p -> {

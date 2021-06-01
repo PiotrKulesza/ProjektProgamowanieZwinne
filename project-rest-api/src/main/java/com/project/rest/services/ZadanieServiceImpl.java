@@ -6,12 +6,14 @@ import com.project.rest.repositories.ZadanieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Service
 public class ZadanieServiceImpl implements ZadanieService{
 
     private ZadanieRepository zadanieRepository;

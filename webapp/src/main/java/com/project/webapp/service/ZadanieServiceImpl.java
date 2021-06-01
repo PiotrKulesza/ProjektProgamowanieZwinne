@@ -22,7 +22,7 @@ public class ZadanieServiceImpl implements ZadanieService{
     @Value("${rest.server.url}")
     private String serverUrl;
 
-    private final static String RESOURCE_PATH = "/api/projekty";
+    private final static String RESOURCE_PATH = "/api/zadania";
 
     private RestTemplate restTemplate;
 
@@ -54,19 +54,20 @@ public class ZadanieServiceImpl implements ZadanieService{
     }
 
     @Override
-    public Zadanie setZadanie(Zadanie zadanie) {
+    public Zadanie setZadanie(Zadanie zadanie, Integer projektId) {
         if(zadanie.getZadanieId() != null){
-            String url = getUriStringComponent(zadanie.getZadanieId());
+            String url = getUriStringComponent(zadanie.getZadanieId())+"?projektId="+projektId;
             logger.info("REQUEST -> PUT {}", url);
             restTemplate.put(url,zadanie);
             return zadanie;
         }else{
             HttpEntity<Zadanie> request = new HttpEntity<>(zadanie);
-            String url = getUriStringComponent();
+            String url = getUriStringComponent()+"?projektId="+projektId;
+            String url2 = getUriStringComponent();
             logger.info("REQUEST -> POST {}", url);
             URI location = restTemplate.postForLocation(url, request);
             logger.info("REQUEST (location) -> GET {}", location);
-            return restTemplate.postForObject(url,zadanie,Zadanie.class);
+            return restTemplate.getForObject(location,Zadanie.class);
         }
     }
 

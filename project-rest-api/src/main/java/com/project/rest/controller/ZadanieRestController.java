@@ -1,7 +1,9 @@
 package com.project.rest.controller;
 
+import com.project.rest.model.Projekt;
 import com.project.rest.model.Student;
 import com.project.rest.model.Zadanie;
+import com.project.rest.services.ProjektService;
 import com.project.rest.services.StudentService;
 import com.project.rest.services.ZadanieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,26 +16,42 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDateTime;
 
+@RestController
+@RequestMapping("/api")
 public class ZadanieRestController {
     private ZadanieService zadanieService;
+    private ProjektService projektService;
 
     @Autowired
-    public ZadanieRestController(ZadanieService zadanieService) {
+    public ZadanieRestController(ZadanieService zadanieService, ProjektService projektService) {
+        this.projektService=projektService;
         this.zadanieService = zadanieService;
+
+
     }
 
-    @PostMapping(path = "/zadania")
-    ResponseEntity<Void> createZadanie(@Valid @RequestBody Zadanie zadanie) {
+    @GetMapping("/zadania/{zadanieId}")
+    ResponseEntity<Zadanie> getZadabue(@PathVariable Integer zadanieId) {
+        return ResponseEntity.of(zadanieService.getZadanie(zadanieId));
+    }
+
+    @PostMapping(path = "/zadania", params = "projektId")
+    ResponseEntity<Void> createZadanie(@Valid @RequestBody Zadanie zadanie, Integer projektId) {
+        Integer nextKolejnosc= projektService.getProjekt(projektId).get().getZadania().size();
+        zadanie.setDataczasDodania(LocalDateTime.now());
+        zadanie.setKolejnosc(nextKolejnosc+1);
+        zadanie.setProjekt(projektService.getProjekt(projektId).get());
         Zadanie createdZadanie = zadanieService.setZadanie(zadanie);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{zadanieId}").buildAndExpand(createdZadanie.getZadanieId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/studenci/{studentId}")
+    @PutMapping(name="/zadania/{zadanieId}", params = "projektId")
     public ResponseEntity<Void> updateZadanie(@Valid @RequestBody Zadanie zadanie,
-                                              @PathVariable Integer zadanieId) {
+                                              @PathVariable Integer zadanieId, Integer projektId) {
         return zadanieService.getZadanie(zadanieId)
                 .map(p -> {
                     zadanieService.setZadanie(zadanie);
@@ -42,7 +60,7 @@ public class ZadanieRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/studenci/{studentId}")
+    @DeleteMapping("/zadania/{zadanieId}")
     public ResponseEntity<Void> deleteZadanie(@PathVariable Integer zadanieId) {
         return zadanieService.getZadanie(zadanieId).map(p -> {
             zadanieService.deleteZadanie(zadanieId);
@@ -50,8 +68,8 @@ public class ZadanieRestController {
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping(value = "/studenci", params = "projektId")
+    @GetMapping (value = "/zadania", params = "projektId")
     Page<Zadanie> getZadanieProjektu (Integer projektId, Pageable pageable){
-        return  getZadanieProjektu(projektId,pageable);
+        return zadanieService.getZadanieProjektu(projektId,pageable);
     }
 }
