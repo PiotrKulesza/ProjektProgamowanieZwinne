@@ -22,7 +22,7 @@ public class StudentServiceImpl implements StudentService{
     @Value("${rest.server.url}")
     private String serverUrl;
 
-    private final static String RESOURCE_PATH = "/api/srudenci";
+    private final static String RESOURCE_PATH = "/api/studenci";
 
     private RestTemplate restTemplate;
 
@@ -53,7 +53,7 @@ public class StudentServiceImpl implements StudentService{
             logger.info("REQUEST -> POST {}", url);
             URI location = restTemplate.postForLocation(url, request);
             logger.info("REQUEST (location) -> GET {}", location);
-            return restTemplate.postForObject(url,student,Student.class);
+            return restTemplate.getForObject(location,Student.class);
         }
     }
 

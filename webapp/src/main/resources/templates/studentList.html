@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <div th:replace="header :: myHeader"></div>
+</head>
+<body>
+<form method="get" action="#" th:action="@{/studentDodaj}" id="dodajProjektForm">
+    <input type="submit" value="Dodaj">
+</form>
+
+<form method="get" action="#" th:action="@{/studentList/search}" id="searchform">
+    <label for="fname">Nazwa:</label>
+    <input type="text" id="fname" name="nazwa"><br><br>
+    <label for="size">Liczba elementów na stornie:</label>
+    <select name="size" id="size" form="searchform">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th> LP.</th>
+        <th> Id </th>
+        <th> Imie </th>
+        <th> Nazwisko </th>
+        <th> Nr Indeksu </th>
+        <th> Email </th>
+        <th> Stacjonarny </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${studenci.isEmpty()}">
+        <td colspan="6"> Brak Studentów </td>
+    </tr>
+    <tr th:each="student, iterator :  ${studenci}">
+        <td><span th:text="${iterator.index+1}"> LP. </span></td>
+        <td><span th:text="${student.getStudentId()}"> Id </span></td>
+        <td><span th:text="${student.getImie()}"> Imie </span></td>
+        <td><span th:text="${student.getNazwisko()}"> Nazwisko </span></td>
+        <td><span th:text="${student.getNrIndeksu()}"> Nr Indeksu </span></td>
+        <td><span th:text="${student.getEmail()}"> Email </span></td>
+        <td><span th:text="${student.isStacjonarny()}"> Stacjonarny </span></td>
+
+    </tr>
+    </tbody>
+</table>
+<form method="get" action="#" th:action="@{/studentList/changePage}" id="previousForm">
+    <input name="nazwa" type="hidden" th:value="${nazwa}">
+    <input name="size" type="hidden" th:value="${size}">
+    <input name="page" type="hidden" th:value="${previousPage}">
+    <input th:if="${page>0}" type="submit" value="Previous">
+</form>
+<form method="get" action="#" th:action="@{/studentList/changePage}" id="nextForm">
+    <input name="nazwa" type="hidden" th:value="${nazwa}">
+    <input name="size" type="hidden" th:value="${size}">
+    <input name="page" type="hidden" th:value="${nextPage}">
+    <input type="submit" value="Next">
+</form>
+</body>
+</html>
