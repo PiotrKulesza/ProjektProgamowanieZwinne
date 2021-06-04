@@ -2,7 +2,9 @@ package com.project.rest.controller;
 
 import javax.validation.Valid;
 import com.project.rest.model.Projekt;
+import com.project.rest.model.Student;
 import com.project.rest.services.ProjektService;
+import com.project.rest.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,9 +20,11 @@ import java.net.URI;
 public class ProjektRestController {
 
     private ProjektService projektService;
+    private StudentService studentService;
 
     @Autowired
-    public ProjektRestController(ProjektService projektService) {
+    public ProjektRestController(ProjektService projektService, StudentService studentService) {
+        this.studentService = studentService;
         this.projektService = projektService;
     }
 
@@ -67,5 +71,6 @@ public class ProjektRestController {
     Page<Projekt> getProjektyByNazwa(@RequestParam String nazwa, Pageable pageable) {
         return projektService.searchByNazwa(nazwa, pageable);
     }
+
 
 }

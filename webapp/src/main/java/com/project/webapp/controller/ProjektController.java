@@ -3,7 +3,10 @@ package com.project.webapp.controller;
 import javax.validation.Valid;
 
 import com.project.webapp.model.Projekt;
+import com.project.webapp.model.Student;
 import com.project.webapp.service.ProjektService;
+import com.project.webapp.service.StudentService;
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,14 +20,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpStatusCodeException;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class ProjektController {
     private ProjektService projektService;
+    private StudentService studentService;
 
     @Autowired
-    public ProjektController(ProjektService projektService) {
+    public ProjektController(ProjektService projektService,StudentService studentService) {
         this.projektService = projektService;
+        this.studentService = studentService;
     }
 
     @GetMapping("/")
@@ -134,4 +141,32 @@ public class ProjektController {
         projektService.deleteProjekt(projekt.getProjektId());
         return "redirect:/projektList";
     }
+
+
+    @GetMapping("/projektDodajStudentList")
+    public String projektDodajStudentList(Model model,@RequestParam Integer projektId){
+        model.addAttribute("studenci", projektService.getProjekt(projektId).get().getStudenci());
+        model.addAttribute("projektId", projektId);
+        return "projektDodajStudentList";
+    }
+
+    @PostMapping("/projektDodajStudentList")
+    public String projektDodajStudentList(Model model,@RequestParam Integer projektId, @RequestParam String nrIndeksu){
+        Projekt projekt = projektService.getProjekt(projektId).get();
+        Set<Student> studenci = projekt.getStudenci();
+        if(studenci.isEmpty()){
+            studenci = new HashSet<>();
+            studenci.add(studentService.searchByNrIndeksu(nrIndeksu).get());
+            projekt.setStudenci(studenci);
+            projektService.setProjekt(projekt);
+        }else{
+            studenci.add(studentService.searchByNrIndeksu(nrIndeksu).get());
+            projekt.setStudenci(studenci);
+            projektService.setProjekt(projekt);
+        }
+        model.addAttribute("studenci", projektService.getProjekt(projektId).get().getStudenci());
+        model.addAttribute("projektId", projektId);
+        return "projektDodajStudentList";
+    }
+
 }

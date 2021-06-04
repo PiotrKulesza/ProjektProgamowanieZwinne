@@ -7,12 +7,10 @@
     <div th:replace="header :: myHeader"></div>
 </head>
 <body>
-<form method="get" action="#" th:action="@{/studentDodaj}" id="dodajProjektForm">
-    <input type="submit" value="Dodaj">
-</form>
 
-<form method="get" action="#" th:action="@{/studentDodajDoPorjekt}" id="searchform">
+<form method="POST" action="#" th:action="@{/projektDodajStudentList}" id="searchform">
     <label for="fname">Nazwa:</label>
+    <input type="hidden" name="projektId" th:value="${projektId}"><br><br>
     <input type="number" id="fname" name="nrIndeksu"><br><br>
     <input type="submit" value="Dodaj">
 </form>
@@ -30,7 +28,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:if="${studenci.isEmpty()}">
+    <tr th:if="${studenci}">
         <td colspan="6"> Nie dodano studenta </td>
     </tr>
     <tr th:each="student, iterator :  ${studenci}">

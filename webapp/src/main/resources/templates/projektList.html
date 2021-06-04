@@ -59,7 +59,10 @@
             <input name="projektId" type="hidden" th:value="${projekt.getProjektId()}">
             <input type="submit" value="Zadania">
         </form>
-
+            <form method="get" action="#" th:action="@{/projektDodajStudentList}" id="projektDodajStudentList">
+                <input name="projektId" type="hidden" th:value="${projekt.getProjektId()}">
+                <input type="submit" value="Dodaj Studneta">
+            </form>
         </td>
     </tr>
     </tbody>

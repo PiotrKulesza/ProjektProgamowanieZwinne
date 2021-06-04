@@ -1,6 +1,7 @@
 package com.project.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -54,6 +55,7 @@ public class Projekt {
 	@JoinTable(name = "projekt_student",
 	joinColumns = {@JoinColumn(name="projekt_id")},
 	inverseJoinColumns = {@JoinColumn(name="student_id")})
+	@JsonIgnoreProperties({"projekty"})
 	private Set<Student> studenci;
 
 
