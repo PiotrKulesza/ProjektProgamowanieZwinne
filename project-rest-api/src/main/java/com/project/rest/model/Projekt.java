@@ -55,7 +55,6 @@ public class Projekt {
 	@JoinTable(name = "projekt_student",
 	joinColumns = {@JoinColumn(name="projekt_id")},
 	inverseJoinColumns = {@JoinColumn(name="student_id")})
-	@JsonIgnoreProperties({"projekty"})
 	private Set<Student> studenci;
 
 

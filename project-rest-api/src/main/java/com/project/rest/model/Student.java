@@ -43,7 +43,6 @@ public class Student {
 	private boolean stacjonarny;
 
 	@ManyToMany(mappedBy = "studenci")
-	@JsonIgnoreProperties({"studenci"})
 	private Set<Projekt> projekty;
 
 
