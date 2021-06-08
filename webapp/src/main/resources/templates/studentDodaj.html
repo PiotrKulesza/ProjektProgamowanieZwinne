@@ -7,23 +7,24 @@
     <div th:replace="header :: myHeader"></div>
 </head>
 <body>
-
+<br>
 <form method="get" action="#" th:action="@{/studentList}" id="anulujForm">
-    <input type="submit" value="Cancel">
+    <input type="submit" value="Anuluj">
 </form>
+<br>
 
 <form method="post" action="#" th:action="@{/studentDodaj}" id="dodajForm">
     <label for="fname">Imię:</label>
+    <br>
     <input type="text" id="fname" name="imie"><br><br>
-    <label for="fname">Nazwisko:</label>
+    <label for="fname">Nazwisko:</label><br>
     <input type="text" id="fsurname" name="nazwisko"><br><br>
-    <label for="fname">Numer Indeksu:</label>
+    <label for="fname">Numer Indeksu:</label><br>
     <input type="number" id="fnrIndeksu" name="nrIndeksu"><br><br>
-    <label for="fname">Email:</label>
+    <label for="fname">Email:</label><br>
     <input type="text" id="femail" name="email"><br><br>
     <label for="fname">Stacjonarny:</label>
     <input type="checkbox" id="fstacjonarny" name="stacjonarny"><br><br>
-
     <input type="submit" value="Dodaj">
 </form>
 </body>

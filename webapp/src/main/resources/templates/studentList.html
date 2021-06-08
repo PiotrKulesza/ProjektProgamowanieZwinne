@@ -7,12 +7,14 @@
     <div th:replace="header :: myHeader"></div>
 </head>
 <body>
+<br>
 <form method="get" action="#" th:action="@{/studentDodaj}" id="dodajProjektForm">
-    <input type="submit" value="Dodaj">
+    <input type="submit" value="Dodaj studenta">
 </form>
+<br>
 
 <form method="get" action="#" th:action="@{/studentList/search}" id="searchform">
-    <label for="fname">Nazwa:</label>
+    <label for="fname">Wyszukaj studenta (wciśnij ENTER): </label>
     <input type="text" id="fname" name="nazwa"><br><br>
     <label for="size">Liczba elementów na stornie:</label>
     <select name="size" id="size" form="searchform">
@@ -20,9 +22,9 @@
         <option value="10">10</option>
         <option value="20">20</option>
     </select>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Zatwierdź">
 </form>
-
+<br>
 <table>
     <thead>
     <tr>
@@ -51,17 +53,18 @@
     </tr>
     </tbody>
 </table>
+<br>
 <form method="get" action="#" th:action="@{/studentList/changePage}" id="previousForm">
     <input name="nazwa" type="hidden" th:value="${nazwa}">
     <input name="size" type="hidden" th:value="${size}">
     <input name="page" type="hidden" th:value="${previousPage}">
-    <input th:if="${page>0}" type="submit" value="Previous">
+    <input th:if="${page>0}" type="submit" value="Poprzednia">
 </form>
 <form method="get" action="#" th:action="@{/studentList/changePage}" id="nextForm">
     <input name="nazwa" type="hidden" th:value="${nazwa}">
     <input name="size" type="hidden" th:value="${size}">
     <input name="page" type="hidden" th:value="${nextPage}">
-    <input type="submit" value="Next">
+    <input type="submit" value="Następna">
 </form>
 </body>
 </html>

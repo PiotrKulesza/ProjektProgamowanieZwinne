@@ -7,14 +7,14 @@
     <div th:replace="header :: myHeader"></div>
 </head>
 <body>
-
+<br>
 <form method="POST" action="#" th:action="@{/projektDodajStudentList}" id="searchform">
     <label for="fname">Nazwa:</label>
-    <input type="hidden" name="projektId" th:value="${projektId}"><br><br>
+    <input type="hidden" name="projektId" th:value="${projektId}"><br>
     <input type="number" id="fname" name="nrIndeksu"><br><br>
     <input type="submit" value="Dodaj">
 </form>
-
+<br>
 <table>
     <thead>
     <tr>
@@ -43,17 +43,18 @@
     </tr>
     </tbody>
 </table>
+<br>
 <form method="get" action="#" th:action="@{/studentList/changePage}" id="previousForm">
     <input name="nazwa" type="hidden" th:value="${nazwa}">
     <input name="size" type="hidden" th:value="${size}">
     <input name="page" type="hidden" th:value="${previousPage}">
-    <input th:if="${page>0}" type="submit" value="Previous">
+    <input th:if="${page>0}" type="submit" value="Poprzednia">
 </form>
 <form method="get" action="#" th:action="@{/studentList/changePage}" id="nextForm">
     <input name="nazwa" type="hidden" th:value="${nazwa}">
     <input name="size" type="hidden" th:value="${size}">
     <input name="page" type="hidden" th:value="${nextPage}">
-    <input type="submit" value="Next">
+    <input type="submit" value="Następna">
 </form>
 </body>
 </html>

@@ -7,17 +7,25 @@
     <div th:replace="header :: myHeader"></div>
 </head>
 <body>
+</br>
 <form method="get" action="#" th:action="@{/projektList}" id="anulujForm">
-    <input type="submit" value="Cancel">
+    <input type="submit" value="Anuluj">
 </form>
 
 <form method="post" action="#" th:action="@{/projektDodaj}" id="dodajForm">
+    </br>
     <label for="fname">Nazwa:</label>
-    <input type="text" id="fname" name="nazwa"><br><br>
+    </br>
+    <input type="text" id="fname" name="nazwa">
+    <br><br>
     <label for="fopis">Opis:</label>
-    <textarea name="opis" id="fopis" form="dodajForm">Enter text here...</textarea><br><br>
+    </br>
+    <textarea name="opis" id="fopis" form="dodajForm">Treść opisu dodaj tutaj</textarea>
+    <br><br>
     <label for="fdataOddania">Data:</label>
-    <input type="date" id="fdataOddania" name="dataOddania"><br><br>
+    </br>
+    <input type="date" id="fdataOddania" name="dataOddania">
+    <br><br>
     <input type="submit" value="Dodaj">
 </form>
 </body>

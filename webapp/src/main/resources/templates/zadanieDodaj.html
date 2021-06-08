@@ -7,16 +7,17 @@
     <div th:replace="header :: myHeader"></div>
 </head>
 <body>
+<br>
 <form method="get" action="#" th:action="@{/zadanieList}" id="anulujForm">
     <input type="hidden" name="projektId" th:value="${projektId}">
-    <input type="submit" value="Cancel">
+    <input type="submit" value="Anuluj">
 </form>
-
+<br>
 <form method="post" action="#" th:action="@{/zadanieDodaj}" id="dodajForm">
-    <label for="fname">Nazwa:</label>
+    <label for="fname">Nazwa:</label><br>
     <input type="text" id="fname" name="nazwa"><br><br>
-    <label for="fopis">Opis:</label>
-    <textarea name="opis" id="fopis" form="dodajForm">Enter text here...</textarea><br><br>
+    <label for="fopis">Opis:</label><br>
+    <textarea name="opis" id="fopis" form="dodajForm">Tutaj dodaj opis...</textarea><br><br>
     <input type="hidden" name="projektId" th:value="${projektId}">
     <input type="submit" value="Dodaj">
 </form>
