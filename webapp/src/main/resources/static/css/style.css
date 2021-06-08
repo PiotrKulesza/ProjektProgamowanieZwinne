@@ -1,4 +1,52 @@
 body {
-    background-color:#242424;
+    background-color:#555555;
     color: white;
+    font-family: 'Lato', sans-serif;
+
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+table, th, td {
+    border: 2px solid black;
+    text-align:center;
+    min-width: 40px;
+}
+th {
+    background-color: #0d6efd;
+    text: bold;
+}
+
+input[type=submit] {
+    width: 8em;  height: 2em;
+}
+input[type=submit]:hover {
+    background-color: #ffc720;
+}
+
+input[type=text] {
+    width: 16em;  height: 2em;
+}
+input[type=date] {
+    width: 16em;  height: 2em;
+}
+textarea {
+    width: 16em;  height: 2em;
+}
+
+
+#container
+{
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
 }
