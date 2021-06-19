@@ -27,6 +27,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Optional<Student> getStudent(Integer studentId) {
+
         return studentRepository.findById(studentId);
     }
 
@@ -51,6 +52,8 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Page<Student> getStudenci(Pageable pageable) {
+        //System.out.println(studentRepository.findAll(pageable).getContent().get(0));
+
         return studentRepository.findAll(pageable);
     }
 
@@ -67,6 +70,11 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public Page<Student> searchByNazwiskoStartsWithIgnoreCase(String nazwisko, Pageable pageable) {
         return studentRepository.findByNazwiskoStartsWithIgnoreCase(nazwisko,pageable);
+    }
+
+    @Override
+    public Optional<Student> getByLogin(String email, String haslo) {
+        return studentRepository.findByEmailAndAndHaslo(email,haslo);
     }
 
 

@@ -80,6 +80,12 @@ public class StudentRestController {
 
     }
 
+    @GetMapping(value = "/studenci/login", params = {"email","haslo"})
+    Optional<Student> getByLogin(@RequestParam String email, @RequestParam String haslo){
+        return studentService.getByLogin(email,haslo);
+
+    }
+
 
 
 }

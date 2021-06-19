@@ -11,5 +11,6 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
     Optional<Student> findByNrIndeksu(String nrIndeksu);
     Page<Student> findByNrIndeksuStartingWith(String nrIndeksu, Pageable pageable);
     Page<Student> findByNazwiskoStartsWithIgnoreCase(String nazwisko, Pageable pageable);
+    Optional<Student> findByEmailAndAndHaslo(String email, String haslo);
 
 }

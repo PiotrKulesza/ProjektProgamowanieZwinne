@@ -33,5 +33,6 @@ public class Student {
 
 	private Set<Projekt> projekty;
 
+	private String haslo;
 
 }

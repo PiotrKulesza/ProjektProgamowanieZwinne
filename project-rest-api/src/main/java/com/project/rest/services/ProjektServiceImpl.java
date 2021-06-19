@@ -27,11 +27,13 @@ public class ProjektServiceImpl implements ProjektService{
 
     @Override
     public Optional<Projekt> getProjekt(Integer projektId) {
+        System.out.println(projektRepository.findById(projektId).get().getStudenci());
         return projektRepository.findById(projektId);
     }
 
     @Override
     public Projekt setProjekt(Projekt projekt) {
+
         return projektRepository.save(projekt);
     }
 

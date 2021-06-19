@@ -14,5 +14,6 @@ public interface StudentService {
     Optional<Student> searchByNrIndeksu(String nrIndeksu);
     Page<Student> searchByNrIndeksuStartingWith(String nrIndeksu,Pageable pageable);
     Page<Student> searchByNazwiskoStartsWithIgnoreCase(String nazwisko,Pageable pageable);
+    Optional<Student> getByLogin(String email, String haslo) ;
 
 }

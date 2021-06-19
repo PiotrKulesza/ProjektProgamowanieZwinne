@@ -1,5 +1,6 @@
 package com.project.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -43,7 +44,11 @@ public class Student {
 	private boolean stacjonarny;
 
 	@ManyToMany(mappedBy = "studenci")
+	@JsonIgnore
 	private Set<Projekt> projekty;
+
+	@Column(nullable = false, length = 50)
+	private String haslo;
 
 
 }
