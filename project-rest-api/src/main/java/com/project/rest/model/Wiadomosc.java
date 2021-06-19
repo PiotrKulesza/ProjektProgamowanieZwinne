@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Wiadmosc {
+public class Wiadomosc {
 
     @Id
     @GeneratedValue

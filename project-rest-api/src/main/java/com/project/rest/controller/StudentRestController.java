@@ -1,10 +1,14 @@
 package com.project.rest.controller;
 
 import com.project.rest.model.Student;
+import com.project.rest.model.Wiadomosc;
 import com.project.rest.services.StudentService;
 import javax.validation.Valid;
+
+import com.project.rest.services.WiadomoscService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +23,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
 public class StudentRestController {
     private StudentService studentService;
+    private WiadomoscService wiadomoscService;
+
 
     @Autowired
-    public StudentRestController(StudentService studentService) {
+    public StudentRestController(StudentService studentService, WiadomoscService wiadomoscService) {
         this.studentService = studentService;
+        this.wiadomoscService = wiadomoscService;
     }
 
     @PostMapping(path = "/studenci")
@@ -86,6 +95,31 @@ public class StudentRestController {
 
     }
 
+    @GetMapping(value = "/studenci/wiadomosci",params = {"nadStudentId","adStudentId"})
+    Page<Wiadomosc> getWiadomoscPage(@RequestParam Integer nadStudentId, @RequestParam Integer adStudentId, Pageable pageable){
 
+        List<Wiadomosc> wiadomoscList = wiadomoscService.getWiadomosci();
+        List<Wiadomosc> wiadomoscListStudent = wiadomoscList.stream().filter(s->(s.getAdresat()
+                .getStudentId().equals(adStudentId)
+        && s.getNadawca().getStudentId().equals(nadStudentId)) || (s.getAdresat().getStudentId().equals(nadStudentId)
+                && s.getNadawca().getStudentId().equals(adStudentId))).collect(Collectors.toList());
+        int start = (pageable.getPageNumber() - 1) * pageable.getPageSize();
+        int end = (start + pageable.getPageSize()) > wiadomoscListStudent.size() ? wiadomoscListStudent.size() :
+                (pageable.getPageSize() * pageable.getPageNumber());
+
+        return new PageImpl<>(wiadomoscList.subList(start, end),pageable,wiadomoscListStudent.size());
+    }
+
+    @PostMapping(path = "/studenci/wiadomosci")
+    ResponseEntity<Void> createStudent(@Valid @RequestBody Wiadomosc wiadomosc, @RequestParam Integer nadStudentId,  @RequestParam Integer adStudentId) {
+        Student nadawca = studentService.getStudent(nadStudentId).get();
+        Student adresat = studentService.getStudent(adStudentId).get();
+        wiadomosc.setAdresat(adresat);
+        wiadomosc.setNadawca(nadawca);
+        Wiadomosc wiadomoscReturn = wiadomoscService.saveWiadomosc(wiadomosc);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{studentId}").buildAndExpand(wiadomoscReturn.getWiadomoscId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
 
 }
