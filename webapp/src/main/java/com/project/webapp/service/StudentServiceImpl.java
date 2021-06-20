@@ -103,6 +103,17 @@ public class StudentServiceImpl implements StudentService{
         return getPage(url, restTemplate);
     }
 
+    @Override
+    public Optional<Student> getByLogin(String email, String haslo) {
+        URI url = ServiceUtil.getUriComponent(serverUrl,getResourcePath()+"/login")
+                .queryParam("email",email)
+                .queryParam("haslo",haslo)
+                .build()
+                .toUri();
+        logger.info("REQUEST -> GET {}", url);
+        return Optional.ofNullable(restTemplate.getForObject(url, Student.class));
+    }
+
     private Page<Student> getPage(URI uri, RestTemplate restTemplate) {
         return ServiceUtil.getPage(uri, restTemplate,
                 new ParameterizedTypeReference<RestResponsePage<Student>>() {});

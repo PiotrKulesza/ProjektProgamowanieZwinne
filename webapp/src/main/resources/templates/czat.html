@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <div th:replace="headerStudent :: headerStudent"></div>
+</head>
+<body>
+<div style="width: 1000px; height: 350px; overflow-y: scroll;" >
+
+    <div style="border: 5px white" th:each="wiadomosc, iterator :  ${wiadomosci}">
+        Nadawca: <span th:text="${wiadomosc.getNadawca().getNazwisko()}"></span></p>
+        Wiadomosc: <span th:text="${wiadomosc.getTekst()}"></span></p>
+    </div>
+
+</div>
+<div>
+    <form method="post" action="#" th:action="@{/czat}" id="wyslijForm">
+        <input id="odbiorcaId" name="odbiorcaId" type="hidden" th:value="${odbiorcaId}"/>
+        <label for="fopis">Wiadomość:</label>
+        </br>
+        <textarea name="tekst" id="fopis" form="wyslijForm"
+        placeholder="Treść wiadomości dodaj tutaj"></textarea>
+        <br><br>
+        <input type="submit" value="Wyślij">
+    </form>
+</div>
+
+
+</body>
+</html>

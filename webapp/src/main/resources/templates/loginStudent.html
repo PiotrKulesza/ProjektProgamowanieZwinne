@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <div th:replace="header :: myHeader"></div>
+</head>
+<body>
+<form method="post" action="#" th:action="@{/loginStudent}" id="loginStudentForm">
+    </br>
+    <label for="flogin">Email:</label>
+    </br>
+    <input type="email" id="flogin" name="email">
+    <br><br>
+    <label for="fhaslo">Login:</label>
+    </br>
+    <input type="password" id="fhaslo" name="haslo">
+    <br><br>
+    <input type="submit" value="Dodaj">
+</form>
+</body>
+</html>

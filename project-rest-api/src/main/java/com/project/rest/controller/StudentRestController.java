@@ -91,27 +91,36 @@ public class StudentRestController {
 
     @GetMapping(value = "/studenci/login", params = {"email","haslo"})
     Optional<Student> getByLogin(@RequestParam String email, @RequestParam String haslo){
-        return studentService.getByLogin(email,haslo);
+        Optional<Student> optionalStudent = studentService.getByLogin(email,haslo);
+        //student.setHaslo(null);
+        //student.setProjekty(null);
+
+        if(optionalStudent.isPresent()){
+            Student student = optionalStudent.get();
+            student.setHaslo(null);
+            student.setProjekty(null);
+            return Optional.of(student);
+        }
+
+        return optionalStudent;
 
     }
 
     @GetMapping(value = "/studenci/wiadomosci",params = {"nadStudentId","adStudentId"})
-    Page<Wiadomosc> getWiadomoscPage(@RequestParam Integer nadStudentId, @RequestParam Integer adStudentId, Pageable pageable){
+    List<Wiadomosc> getWiadomoscPage(@RequestParam Integer nadStudentId, @RequestParam Integer adStudentId, Pageable pageable){
 
         List<Wiadomosc> wiadomoscList = wiadomoscService.getWiadomosci();
         List<Wiadomosc> wiadomoscListStudent = wiadomoscList.stream().filter(s->(s.getAdresat()
                 .getStudentId().equals(adStudentId)
         && s.getNadawca().getStudentId().equals(nadStudentId)) || (s.getAdresat().getStudentId().equals(nadStudentId)
                 && s.getNadawca().getStudentId().equals(adStudentId))).collect(Collectors.toList());
-        int start = (pageable.getPageNumber() - 1) * pageable.getPageSize();
-        int end = (start + pageable.getPageSize()) > wiadomoscListStudent.size() ? wiadomoscListStudent.size() :
-                (pageable.getPageSize() * pageable.getPageNumber());
 
-        return new PageImpl<>(wiadomoscList.subList(start, end),pageable,wiadomoscListStudent.size());
+        System.out.println(wiadomoscListStudent);
+        return wiadomoscListStudent;
     }
 
     @PostMapping(path = "/studenci/wiadomosci")
-    ResponseEntity<Void> createStudent(@Valid @RequestBody Wiadomosc wiadomosc, @RequestParam Integer nadStudentId,  @RequestParam Integer adStudentId) {
+    ResponseEntity<Void> createWiadomosc(@Valid @RequestBody Wiadomosc wiadomosc, @RequestParam Integer nadStudentId,  @RequestParam Integer adStudentId) {
         Student nadawca = studentService.getStudent(nadStudentId).get();
         Student adresat = studentService.getStudent(adStudentId).get();
         wiadomosc.setAdresat(adresat);

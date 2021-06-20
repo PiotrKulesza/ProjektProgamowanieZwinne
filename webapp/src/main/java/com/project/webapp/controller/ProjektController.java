@@ -34,10 +34,7 @@ public class ProjektController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "homePage";
-    }
+
 
     @GetMapping("/projektList")
     public String projektList(Model model, Pageable pageable) {

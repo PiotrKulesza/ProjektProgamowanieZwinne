@@ -23,12 +23,12 @@ public class Wiadomosc {
 
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "student_id_nad")
     private Student nadawca;
 
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "student_id_ad")
     private Student adresat;
 
 }
