@@ -1,7 +1,10 @@
 package com.project.webapp.controller;
 
 import com.project.webapp.model.Student;
+import com.project.webapp.model.Wykladowca;
 import com.project.webapp.service.StudentService;
+import com.project.webapp.service.WiadomoscService;
+import com.project.webapp.service.WykladowcaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +18,12 @@ import java.util.Optional;
 public class LoginController {
 
     private StudentService studentService;
+    private WykladowcaService wykladowcaService;
 
     @Autowired
-    public LoginController(StudentService studentService) {
+    public LoginController(StudentService studentService, WykladowcaService wykladowcaService) {
         this.studentService = studentService;
+        this.wykladowcaService = wykladowcaService;
     }
 
     @GetMapping("/loginStudent")
@@ -41,10 +46,31 @@ public class LoginController {
 
     }
 
-    @GetMapping("/test")
-    public String test(HttpSession session) {
-        //session.setAttribute("test","test");
-        return "test";
+    @GetMapping("/loginWykladowca")
+    public String loginPageWykladowca() {
+        return "loginWykladowca";
+    }
+
+    @PostMapping ("/loginWykladowca")
+    public String loginPageWykladowca(HttpSession session, @RequestParam String email, @RequestParam String haslo) {
+
+        Optional<Wykladowca> optionalWykladowca = wykladowcaService.getByLogin(email,haslo);
+        if(optionalWykladowca.isPresent()) {
+            Wykladowca wykladowca = optionalWykladowca.get();
+            session.setAttribute("role", "Wykladowca");
+            session.setAttribute("wykladowcaId", wykladowca.getWykladowcaId());
+            return "wykladowcaHomePage";
+        }else
+            session.invalidate();
+        return "homePage";
+
+    }
+
+
+
+    @GetMapping("/wykladowcaHomePage")
+    public String indexWykladowca() {
+        return "wykladowcaHomePage";
     }
 
     @GetMapping("/loggout")

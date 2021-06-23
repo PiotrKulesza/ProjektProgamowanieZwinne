@@ -6,6 +6,21 @@
 <head>
     <div th:replace="headerStudent :: headerStudent"></div>
 </head>
+<script th:inline="javascript">
+    // Check browser support
+    var id = /*[[${session.studentId}]]*/ 'default'
+    var role = /*[[${session.role}]]*/ 'default'
+    console.log(id)
+    if (id !== 'default' || id!==null || role !=="Student") {
+
+
+        /*<![CDATA[*/
+        //
+    } else {
+        window.location.href = "/loggout";
+    }
+    /*]]>*/
+</script>
 <body>
 
 <picture>

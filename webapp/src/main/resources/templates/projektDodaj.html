@@ -4,8 +4,23 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <div th:replace="header :: myHeader"></div>
+    <div th:replace="headerWykladowca :: headerWykladowca"></div>
 </head>
+<script th:inline="javascript">
+    // Check browser support
+    let id = /*[[${session.wykladowcaId}]]*/ 'default';
+    let role = /*[[${session.role}]]*/ 'default';
+    console.log(id)
+    if (id !== 'default' || id!==null || role !=="Wykladowca") {
+
+
+        /*<![CDATA[*/
+        //
+    } else {
+        window.location.href = "/loggout";
+    }
+    /*]]>*/
+</script>
 <body>
 </br>
 <form method="get" action="#" th:action="@{/projektList}" id="anulujForm">

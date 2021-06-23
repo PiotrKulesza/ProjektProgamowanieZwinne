@@ -22,19 +22,9 @@
     /*]]>*/
 </script>
 <body>
-<br>
-<form method="get" action="#" th:action="@{/zadanieList}" id="anulujForm">
-    <input type="hidden" name="projektId" th:value="${projektId}">
-    <input type="submit" value="Anuluj">
-</form>
-<br>
-<form method="post" action="#" th:action="@{/zadanieDodaj}" id="dodajForm">
-    <label for="fname">Nazwa:</label><br>
-    <input type="text" id="fname" name="nazwa"><br><br>
-    <label for="fopis">Opis:</label><br>
-    <textarea name="opis" id="fopis" form="dodajForm">Tutaj dodaj opis...</textarea><br><br>
-    <input type="hidden" name="projektId" th:value="${projektId}">
-    <input type="submit" value="Dodaj">
-</form>
+<picture>
+    <img th:src="@{images/logo.png}" class="center" width="500px" height="500px">
+</picture>
+
 </body>
 </html>

@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body>
-<div th:fragment="myHeader">
+<div th:fragment="headerWykladowca">
     <!--    Meta Tags-->
     <meta charset="UTF-8">
 
@@ -14,29 +14,35 @@
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
 
 
+
+
     <title>Title</title>
 
     <!--    Content-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="/wykladowcaHomePage">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/wykladowcaHomePage">Home</a>
                     </li>
-
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownLoginTypes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Logowanie
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Projekty
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownLoginTypes">
-                            <li><a class="dropdown-item" href="/loginStudent">Login student</a></li>
-                            <li><a class="dropdown-item" href="/loginWykladowca">Login wykładowca</a></li>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/projektList">Lista Projektów</a></li>
+                            <li><a class="dropdown-item" href="/projektDodaj">Dodaj projekt</a></li>
+                            <li><a class="dropdown-item" href="/studentList">Lista Studentów</a></li>
+                            <li><a class="dropdown-item" href="/studentDodaj">Dodaj Studenta</a></li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/loggout">Loggout</a>
                     </li>
                 </ul>
             </div>
