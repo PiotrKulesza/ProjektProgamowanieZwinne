@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -49,9 +50,9 @@ public class ZadanieRestController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping(name="/zadania/{zadanieId}", params = "projektId")
+    @PutMapping(path="/zadania/{zadanieId}", params = "projektId")
     public ResponseEntity<Void> updateZadanie(@Valid @RequestBody Zadanie zadanie,
-                                              @PathVariable Integer zadanieId, Integer projektId) {
+                                              @PathVariable Integer zadanieId, @RequestParam Integer projektId) {
         return zadanieService.getZadanie(zadanieId)
                 .map(p -> {
                     zadanieService.setZadanie(zadanie);
@@ -60,15 +61,16 @@ public class ZadanieRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/zadania/{zadanieId}")
-    public ResponseEntity<Void> deleteZadanie(@PathVariable Integer zadanieId) {
+    @DeleteMapping(path ="/zadania/{zadanieId}", params = "projektId")
+    public ResponseEntity<Void> deleteZadanie(@PathVariable Integer zadanieId, @RequestParam Integer projektId) {
+
         return zadanieService.getZadanie(zadanieId).map(p -> {
             zadanieService.deleteZadanie(zadanieId);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping (value = "/zadania", params = "projektId")
+    @GetMapping (path = "/zadania", params = "projektId")
     Page<Zadanie> getZadanieProjektu (Integer projektId, Pageable pageable){
         return zadanieService.getZadanieProjektu(projektId,pageable);
     }

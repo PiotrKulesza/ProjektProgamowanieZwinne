@@ -114,7 +114,6 @@ public class ProjektController {
     @PostMapping(path = "/projektEdit")
     public String projektEditSave(@ModelAttribute @Valid Projekt projekt, BindingResult bindingResult) {
 //parametr BindingResult powinien wystąpić zaraz za parametrem opatrzonym adnotacją @Valid
-        System.out.println("Terst");
         if (bindingResult.hasErrors()) {
             return "projektEdit";
         }
@@ -128,16 +127,6 @@ public class ProjektController {
         return "redirect:/projektList";
     }
 
-    @PostMapping(params="cancel", path = "/projektEdit")
-    public String projektEditCancel() {
-        return "redirect:/projektList";
-    }
-
-    @PostMapping(params="delete", path = "/projektEdit")
-    public String projektEditDelete(@ModelAttribute Projekt projekt) {
-        projektService.deleteProjekt(projekt.getProjektId());
-        return "redirect:/projektList";
-    }
 
 
     @GetMapping("/projektDodajStudentList")
@@ -151,7 +140,8 @@ public class ProjektController {
     public String projektDodajStudentList(Model model,@RequestParam Integer projektId, @RequestParam String nrIndeksu){
         Projekt projekt = projektService.getProjekt(projektId).get();
         Set<Student> studenci = projekt.getStudenci();
-        if(studenci.isEmpty()){
+        if(studenci == null){
+            System.out.println("Test");
             studenci = new HashSet<>();
             studenci.add(studentService.searchByNrIndeksu(nrIndeksu).get());
             projekt.setStudenci(studenci);

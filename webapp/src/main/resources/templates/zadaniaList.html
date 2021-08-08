@@ -48,7 +48,13 @@
         <td><span th:text="${zadanie.getZadanieId()}"> Id </span></td>
         <td><span th:text="${zadanie.getNazwa()}"> Nazwa </span></td>
         <td><span th:text="${zadanie.getOpis()}"> Opis </span></td>
-        <td></td>
+        <td>
+            <form method="POST" action="#" th:action="@{/zadanieUsun}" id="deleteForm">
+                <input name="zadanieId" type="hidden" th:value="${zadanie.getZadanieId()}">
+                <input type="hidden" name="projektId" th:value="${projektId}">
+                <input type="submit" value="Usuń">
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

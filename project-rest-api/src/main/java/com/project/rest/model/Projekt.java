@@ -3,9 +3,7 @@ package com.project.rest.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,7 +24,8 @@ import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "projekt")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Projekt {
@@ -56,10 +55,6 @@ public class Projekt {
 	@JoinTable(name = "projekt_student",
 	joinColumns = {@JoinColumn(name="projekt_id")},
 	inverseJoinColumns = {@JoinColumn(name="student_id")})
-	@JsonIgnore
 	private Set<Student> studenci;
-
-
-
 
 }

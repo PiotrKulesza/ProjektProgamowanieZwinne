@@ -43,7 +43,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:if="${studenci}">
+    <tr th:if="${studenci.isEmpty()}">
         <td colspan="6"> Nie dodano studenta </td>
     </tr>
     <tr th:each="student, iterator :  ${studenci}">

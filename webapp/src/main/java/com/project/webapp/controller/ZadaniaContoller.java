@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,19 @@ public class ZadaniaContoller {
     @PostMapping("/zadanieDodaj")
     public String zadanieDodaj(Model model, Pageable pageable , Integer projektId, @ModelAttribute @Valid Zadanie zadanie){
         zadanieService.setZadanie(zadanie,projektId);
+        model.addAttribute("zadania", zadanieService.getZadanieProjektu(projektId,pageable).getContent());
+        model.addAttribute("projektId",projektId);
+        model.addAttribute("size",10);
+        model.addAttribute("page",0);
+        model.addAttribute("nextPage",1);
+        model.addAttribute("previousPage",0);
+        return "zadaniaList";
+    }
+
+    @PostMapping ("/zadanieUsun")
+    public String zadanieUsun(Model model, Integer zadanieId, Integer projektId, Pageable pageable){
+
+        zadanieService.deleteZadanie(zadanieId,projektId);
         model.addAttribute("zadania", zadanieService.getZadanieProjektu(projektId,pageable).getContent());
         model.addAttribute("projektId",projektId);
         model.addAttribute("size",10);

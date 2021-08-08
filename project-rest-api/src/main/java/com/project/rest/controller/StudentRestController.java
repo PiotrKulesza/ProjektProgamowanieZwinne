@@ -1,5 +1,6 @@
 package com.project.rest.controller;
 
+import com.project.rest.model.Projekt;
 import com.project.rest.model.Student;
 import com.project.rest.model.Wiadomosc;
 import com.project.rest.services.StudentService;
@@ -59,6 +60,11 @@ public class StudentRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build()); // 404 - Not found
     }
 
+    @GetMapping("/studenci/{studentId}")
+    ResponseEntity<Student> getStudent(@PathVariable Integer studentId) {
+        return ResponseEntity.of(studentService.getStudent(studentId));
+    }
+
     @DeleteMapping("/studenci/{studentId}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Integer studentId) {
         return studentService.getStudent(studentId).map(p -> {
@@ -92,8 +98,6 @@ public class StudentRestController {
     @GetMapping(value = "/studenci/login", params = {"email","haslo"})
     Optional<Student> getByLogin(@RequestParam String email, @RequestParam String haslo){
         Optional<Student> optionalStudent = studentService.getByLogin(email,haslo);
-        //student.setHaslo(null);
-        //student.setProjekty(null);
 
         if(optionalStudent.isPresent()){
             Student student = optionalStudent.get();
@@ -129,6 +133,13 @@ public class StudentRestController {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{studentId}").buildAndExpand(wiadomoscReturn.getWiadomoscId()).toUri();
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping(path = "/studenci/deleteWiadomosci")
+    void deleteWiadomosc(@RequestParam Integer studentId) {
+        Student nadawca = studentService.getStudent(studentId).get();
+        Student adresat = studentService.getStudent(studentId).get();
+        wiadomoscService.delete(nadawca,adresat);
     }
 
 }

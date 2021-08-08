@@ -72,8 +72,9 @@ public class ZadanieServiceImpl implements ZadanieService{
     }
 
     @Override
-    public void deleteZadanie(Integer zadanieId) {
+    public void deleteZadanie(Integer zadanieId, Integer projektId) {
         URI url = ServiceUtil.getUriComponent(serverUrl, getResourcePath(zadanieId))
+                .queryParam("projektId",projektId)
                 .build()
                 .toUri();
         logger.info("REQUEST -> DELETE {}", url);

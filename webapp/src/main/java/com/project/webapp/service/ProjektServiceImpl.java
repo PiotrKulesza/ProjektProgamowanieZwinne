@@ -41,6 +41,7 @@ public class ProjektServiceImpl implements ProjektService {
         if (projekt.getProjektId() != null) { // modyfikacja istniejącego projektu
             String url = getUriStringComponent(projekt.getProjektId());
             logger.info("REQUEST -> PUT {}", url);
+            System.out.println(projekt.getStudenci());
             restTemplate.put(url, projekt);
             return projekt;
         } else {//utworzenie nowego projektu

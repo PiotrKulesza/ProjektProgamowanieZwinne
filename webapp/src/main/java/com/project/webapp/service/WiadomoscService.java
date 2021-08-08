@@ -13,5 +13,6 @@ public interface WiadomoscService {
 
     Wiadomosc saveWiadomosc(Wiadomosc wiadomosc,Integer nadStudentId, Integer adStudentId);
 
+    void deleteWiadomosc(Integer studentId);
 
 }

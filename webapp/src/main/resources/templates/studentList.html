@@ -50,11 +50,12 @@
         <th> Nr Indeksu </th>
         <th> Email </th>
         <th> Stacjonarny </th>
+        <th> Działania </th>
     </tr>
     </thead>
     <tbody>
     <tr th:if="${studenci.isEmpty()}">
-        <td colspan="6"> Brak Studentów </td>
+        <td colspan="8"> Brak Studentów </td>
     </tr>
     <tr th:each="student, iterator :  ${studenci}">
         <td><span th:text="${iterator.index+1}"> LP. </span></td>
@@ -64,6 +65,16 @@
         <td><span th:text="${student.getNrIndeksu()}"> Nr Indeksu </span></td>
         <td><span th:text="${student.getEmail()}"> Email </span></td>
         <td><span th:text="${student.isStacjonarny()}"> Stacjonarny </span></td>
+
+        <td><form method="post" action="#" th:action="@{/studentList/delete}" id="deleteForm">
+            <input name="studentId" type="hidden" th:value="${student.getStudentId()}">
+            <input type="submit" value="Usuń">
+        </form>
+            <form method="get" action="#" th:action="@{/studentEdit}" id="editForm">
+                <input name="studentId" type="hidden" th:value="${student.getStudentId()}">
+                <input type="submit" value="Edytuj">
+            </form>
+        </td>
 
     </tr>
     </tbody>

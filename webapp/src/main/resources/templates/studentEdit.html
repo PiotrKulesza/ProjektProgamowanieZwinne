@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="headerWykladowca :: headerWykladowca"></div>
+</head>
+<script th:inline="javascript">
+    // Check browser support
+    let id = /*[[${session.wykladowcaId}]]*/ 'default';
+    let role = /*[[${session.role}]]*/ 'default';
+    console.log(id)
+    if (id !== 'default' || id!==null || role !=="Wykladowca") {
+
+
+        /*<![CDATA[*/
+        //
+    } else {
+        window.location.href = "/loggout";
+    }
+    /*]]>*/
+</script>
+<body>
+<div class="root" th:with="isDelete=${#strings.equalsIgnoreCase(param.delete,'true')}">
+    <!--/*@thymesVar id="student" type="com.project.webapp.model.Student"*/-->
+    <form action="#" th:action="@{/studentEdit}" th:object="${student}" method="POST"
+          autocomplete="off">
+
+        <div class="err" th:if="${#fields.hasErrors('*')}">
+            BŁĘDY:
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Wprowadzone dane są niepoprawne!</li>
+            </ul>
+        </div>
+        <div class="container">
+
+            <div th:if="*{studentId}">
+                <label for="studentId" class="lbl">Id:</label>
+                <input th:field="*{studentId}" class="fld" readonly />
+            </div>
+            <div>
+                <label for="imie" class="lbl">Imie studenta:</label>
+                <input th:field="*{imie}" class="fld" type="text"/>
+            </div>
+            <div>
+                <label for="nazwisko" class="lbl">Nazwisko studenta:</label>
+                <input th:field="*{nazwisko}" class="fld" type="text"/>
+            </div>
+            <div>
+                <label for="nrIndeksu" class="lbl">Numer indeksu:</label>
+                <input th:field="*{nrIndeksu}" class="fld" type="text"/>
+            </div>
+            <div>
+                <label for="email" class="lbl">Email:</label>
+                <input th:field="*{email}" class="fld" type="email"/>
+            </div>
+            <div>
+                <label for="haslo" class="lbl">Hasło:</label>
+                <input th:field="*{haslo}" class="fld" type="text"/>
+            </div>
+            <div>
+                <label for="stacjonarny" class="lbl">Stacjonarny:</label>
+                <input th:field="*{stacjonarny}" class="fld" type="checkbox"/>
+            </div>
+        </div>
+        <input type="submit" value="Edytuj">
+    </form>
+</div>
+</body>
+</html>

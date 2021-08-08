@@ -59,6 +59,15 @@ public class WiadomoscServiceImpl implements WiadomoscService{
         return null;
     }
 
+    @Override
+    public void deleteWiadomosc(Integer studentId) {
+        URI url = ServiceUtil.getUriComponent(serverUrl, getResourcePath()+"/deleteWiadomosci")
+                .queryParam("studentId",studentId)
+                .build()
+                .toUri();
+        logger.info("REQUEST -> DELETE {}", url);
+        restTemplate.delete(url);
+    }
 
 
     private RestResponsePage<Wiadomosc> getPage(URI uri, RestTemplate restTemplate) {

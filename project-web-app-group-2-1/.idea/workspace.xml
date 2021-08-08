@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3a44d0fa-ebd9-425a-82af-fc6433062e96" name="Default Changelist" comment="" />
+    <list default="true" id="3a44d0fa-ebd9-425a-82af-fc6433062e96" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../project-rest-api/src/main/java/com/project/rest/model/ProjektStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project-rest-api/src/main/java/com/project/rest/model/ProjektStudent.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,6 +34,7 @@
       <option name="presentableId" value="Default" />
       <updated>1621520912588</updated>
       <workItem from="1621520913731" duration="3000" />
+      <workItem from="1628085993830" duration="2000" />
     </task>
     <servers />
   </component>
@@ -48,5 +51,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -1,5 +1,6 @@
 package com.project.rest.services;
 
+import com.project.rest.model.Projekt;
 import com.project.rest.model.Zadanie;
 import com.project.rest.repositories.ProjektRepository;
 import com.project.rest.repositories.ZadanieRepository;
@@ -17,10 +18,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ZadanieServiceImpl implements ZadanieService{
 
     private ZadanieRepository zadanieRepository;
+    private ProjektService projektService;
 
     @Autowired
-    public ZadanieServiceImpl(ZadanieRepository zadanieRepository) {
+    public ZadanieServiceImpl(ZadanieRepository zadanieRepository,
+                              ProjektService projektService) {
         this.zadanieRepository = zadanieRepository;
+        this.projektService = projektService;
     }
 
     @Override
@@ -42,10 +46,12 @@ public class ZadanieServiceImpl implements ZadanieService{
 
     @Override
     public void deleteZadanie(Integer zadanieId) {
-        List<Zadanie> zadaniaProjektu = zadanieRepository.findZadaniaProjektu(zadanieRepository.findById(zadanieId).get().getProjekt().getProjektId());
+        Integer projektId = zadanieRepository.findById(zadanieId).get().getProjekt().getProjektId();
         zadanieRepository.delete(zadanieRepository.findById(zadanieId).get());
-        //<Zadanie> zadaniaProjektu = zadanieRepository.findZadaniaProjektu(projektId);
+
+        List<Zadanie> zadaniaProjektu = projektService.getProjekt(projektId).get().getZadania();
         AtomicInteger kol = new AtomicInteger();
+        kol.set(1);
         zadaniaProjektu.stream().sorted(Comparator.comparingInt(Zadanie::getKolejnosc)).forEach(s->{
             s.setKolejnosc(kol.get());
             kol.getAndIncrement();

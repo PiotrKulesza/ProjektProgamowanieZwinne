@@ -45,7 +45,7 @@ public class ProjektRestController {
     ResponseEntity<Void> saveProjekt(@Valid @RequestBody Projekt projekt,
                                      @PathVariable Integer projektId) {
 
-        System.out.println("Test");
+        System.out.println(projekt.getStudenci());
         return projektService.getProjekt(projektId)
                 .map(p -> {
                     projektService.setProjekt(projekt);

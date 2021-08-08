@@ -1,5 +1,6 @@
 package com.project.webapp.controller;
 
+import com.project.webapp.model.Projekt;
 import com.project.webapp.model.Student;
 import com.project.webapp.model.Wiadomosc;
 import com.project.webapp.model.Zadanie;
@@ -10,10 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -44,8 +44,50 @@ public class StudentController {
         return "studentDodaj";
     }
 
+
+    @GetMapping("/studentEdit")
+    public String studentEdit(@RequestParam(required = false) Integer studentId, Model model) {
+        if(studentId != null) {
+            model.addAttribute("student", studentService.getStudent(studentId).get());
+        }else {
+            Student student = new Student();
+            model.addAttribute("student", student);
+        }
+        return "studentEdit";
+    }
+
+    @PostMapping("/studentEdit")
+    public String studentEditSave(@ModelAttribute @Valid Student student, BindingResult bindingResult, Model model) {
+        System.out.println(student.getHaslo());
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("student", studentService.getStudent(student.getStudentId()).get());
+            return "studentEdit";
+        }
+        try {
+            studentService.setStudent(student);
+        } catch (HttpStatusCodeException e) {
+            bindingResult.rejectValue(null, String.valueOf(e.getStatusCode().value()),
+                    e.getStatusCode().getReasonPhrase());
+            model.addAttribute("student", studentService.getStudent(student.getStudentId()).get());
+            return "studentEdit";
+        }
+
+        return "redirect:/studentList";
+    }
+
     @GetMapping("/studentList")
     public String studentList(Model model, Pageable pageable) {
+        model.addAttribute("studenci", studentService.getStudenci(pageable).getContent());
+        model.addAttribute("size",10);
+        model.addAttribute("page",0);
+        model.addAttribute("nextPage",1);
+        model.addAttribute("previousPage",0);
+        return "studentList";
+    }
+    @PostMapping("/studentList/delete")
+    public String deleteProjekt(Model model, @RequestParam Integer studentId, Pageable pageable) {
+        wiadomoscService.deleteWiadomosc(studentId);
+        studentService.deleteStudent(studentId);
         model.addAttribute("studenci", studentService.getStudenci(pageable).getContent());
         model.addAttribute("size",10);
         model.addAttribute("page",0);
