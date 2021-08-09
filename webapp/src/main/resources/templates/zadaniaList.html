@@ -54,6 +54,11 @@
                 <input type="hidden" name="projektId" th:value="${projektId}">
                 <input type="submit" value="Usuń">
             </form>
+            <form method="get" action="#" th:action="@{/zadaniaEdit}" id="editForm">
+                <input name="zadanieId" type="hidden" th:value="${zadanie.getZadanieId()}">
+                <input type="hidden" name="projektId" th:value="${projektId}">
+                <input type="submit" value="Edytuj">
+            </form>
         </td>
     </tr>
     </tbody>

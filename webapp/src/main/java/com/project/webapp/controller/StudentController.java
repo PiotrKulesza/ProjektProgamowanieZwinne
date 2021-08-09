@@ -58,7 +58,7 @@ public class StudentController {
 
     @PostMapping("/studentEdit")
     public String studentEditSave(@ModelAttribute @Valid Student student, BindingResult bindingResult, Model model) {
-        System.out.println(student.getHaslo());
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("student", studentService.getStudent(student.getStudentId()).get());
             return "studentEdit";
