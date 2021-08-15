@@ -58,6 +58,13 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
+    public Page<Student> getStudenciWitchoutOne(Integer studentId, Pageable pageable) {
+        //System.out.println(studentRepository.findAll(pageable).getContent().get(0));
+
+        return studentRepository.findAllByStudentIdNot(studentId,pageable);
+    }
+
+    @Override
     public Optional<Student> searchByNrIndeksu(String nrIndeksu) {
         return studentRepository.findByNrIndeksu(nrIndeksu);
     }

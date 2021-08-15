@@ -59,6 +59,18 @@
                 <input type="hidden" name="projektId" th:value="${projektId}">
                 <input type="submit" value="Edytuj">
             </form>
+            <form method="POST" action="#" th:action="@{/zadanieZmienKolejnosc}" id="upForm">
+                <input name="zadanieId" type="hidden" th:value="${zadanie.getZadanieId()}">
+                <input type="hidden" name="projektId" th:value="${projektId}">
+                <input type="hidden" name="upDown" th:value="UP">
+                <input type="submit" value="UP">
+            </form>
+            <form method="POST" action="#" th:action="@{/zadanieZmienKolejnosc}" id="downForm">
+                <input name="zadanieId" type="hidden" th:value="${zadanie.getZadanieId()}">
+                <input type="hidden" name="projektId" th:value="${projektId}">
+                <input type="hidden" name="upDown" th:value="DOWN">
+                <input type="submit" value="DOWN">
+            </form>
         </td>
     </tr>
     </tbody>

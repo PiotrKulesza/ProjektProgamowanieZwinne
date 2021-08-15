@@ -152,8 +152,8 @@ public class StudentController {
     }
 
     @GetMapping("/studentCzatList")
-    public String studentCzatList(Model model, Pageable pageable) {
-        model.addAttribute("studenci", studentService.getStudenci(pageable).getContent());
+    public String studentCzatList(Model model, Pageable pageable,Integer studentId) {
+        model.addAttribute("studenci", studentService.getStudenciWitchoutOne(studentId,pageable).getContent());
         model.addAttribute("size",10);
         model.addAttribute("page",0);
         model.addAttribute("nextPage",1);

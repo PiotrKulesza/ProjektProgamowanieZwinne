@@ -78,6 +78,11 @@ public class StudentRestController {
         return studentService.getStudenci(pageable);
     }
 
+    @GetMapping(value = "/studenci", params = "studentId")
+    Page<Student> getStudenciWitchoutOne(@RequestParam Integer studentId, Pageable pageable) {
+        return studentService.getStudenciWitchoutOne(studentId,pageable);
+    }
+
     @GetMapping(value = "/studenci", params = "nrIndeksu")
     Optional<Student> getStudneciByNrIndeksu(@RequestParam String nrIndeksu){
         return studentService.searchByNrIndeksu(nrIndeksu);

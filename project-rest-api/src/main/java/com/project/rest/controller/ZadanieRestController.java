@@ -40,11 +40,14 @@ public class ZadanieRestController {
 
     @PostMapping(path = "/zadania", params = "projektId")
     ResponseEntity<Void> createZadanie(@Valid @RequestBody Zadanie zadanie, Integer projektId) {
-        Integer nextKolejnosc= projektService.getProjekt(projektId).get().getZadania().size();
-        zadanie.setDataczasDodania(LocalDateTime.now());
-        zadanie.setKolejnosc(nextKolejnosc+1);
-        zadanie.setProjekt(projektService.getProjekt(projektId).get());
-        Zadanie createdZadanie = zadanieService.setZadanie(zadanie);
+
+            Integer nextKolejnosc= projektService.getProjekt(projektId).get().getZadania().size();
+            zadanie.setDataczasDodania(LocalDateTime.now());
+            zadanie.setKolejnosc(nextKolejnosc+1);
+            zadanie.setProjekt(projektService.getProjekt(projektId).get());
+            Zadanie createdZadanie = zadanieService.setZadanie(zadanie);
+
+
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{zadanieId}").buildAndExpand(createdZadanie.getZadanieId()).toUri();
         return ResponseEntity.created(location).build();
@@ -53,8 +56,10 @@ public class ZadanieRestController {
     @PutMapping(path="/zadania/{zadanieId}", params = "projektId")
     public ResponseEntity<Void> updateZadanie(@Valid @RequestBody Zadanie zadanie,
                                               @PathVariable Integer zadanieId, @RequestParam Integer projektId) {
+
         return zadanieService.getZadanie(zadanieId)
                 .map(p -> {
+                    zadanie.setProjekt(projektService.getProjekt(projektId).get());
                     zadanieService.setZadanie(zadanie);
                     return new ResponseEntity<Void>(HttpStatus.OK);
                 })

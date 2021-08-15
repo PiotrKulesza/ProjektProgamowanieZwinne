@@ -22,6 +22,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProjektController {
@@ -141,16 +142,33 @@ public class ProjektController {
         Projekt projekt = projektService.getProjekt(projektId).get();
         Set<Student> studenci = projekt.getStudenci();
         if(studenci == null){
-            System.out.println("Test");
+
             studenci = new HashSet<>();
             studenci.add(studentService.searchByNrIndeksu(nrIndeksu).get());
             projekt.setStudenci(studenci);
             projektService.setProjekt(projekt);
         }else{
-            studenci.add(studentService.searchByNrIndeksu(nrIndeksu).get());
-            projekt.setStudenci(studenci);
-            projektService.setProjekt(projekt);
+            if(!studenci.stream().anyMatch(s -> s.getNrIndeksu().equals(nrIndeksu))) {
+                studenci.add(studentService.searchByNrIndeksu(nrIndeksu).get());
+                projekt.setStudenci(studenci);
+                projektService.setProjekt(projekt);
+            }
         }
+        model.addAttribute("studenci", projektService.getProjekt(projektId).get().getStudenci());
+        model.addAttribute("projektId", projektId);
+        return "projektDodajStudentList";
+    }
+
+    @PostMapping("/projektUsunStudentList")
+    public String projektUsunStudentList(Model model,@RequestParam Integer projektId, @RequestParam Integer studentId){
+        Projekt projekt = projektService.getProjekt(projektId).get();
+        Set<Student> studenci = projekt.getStudenci();
+        Set<Student> studenciNew = studenci.stream().filter(s->!s.getStudentId().equals(studentId))
+                    .collect(Collectors.toSet());
+        projekt.setStudenci(studenciNew);
+        projektService.setProjekt(projekt);
+
+
         model.addAttribute("studenci", projektService.getProjekt(projektId).get().getStudenci());
         model.addAttribute("projektId", projektId);
         return "projektDodajStudentList";
